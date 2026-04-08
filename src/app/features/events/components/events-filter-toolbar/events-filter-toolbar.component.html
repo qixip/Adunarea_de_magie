@@ -1,0 +1,19 @@
+<div class="events-toolbar">
+  <h2 id="events-list-title" class="sr-only">Lista evenimente</h2>
+
+  <div class="format-filters" role="group" aria-label="Filtrează după format">
+    <button
+      *ngFor="let format of formats; trackBy: trackByFormat"
+      type="button"
+      class="filter-chip"
+      [class.active]="activeFormat === format"
+      (click)="selectFormat(format)">
+      {{ format === 'all' ? 'Toate' : format }}
+    </button>
+  </div>
+
+  <a href="https://calendar.google.com" target="_blank" rel="noopener noreferrer" class="btn btn-outline-accent btn-sm">
+    <i class="fab fa-google" aria-hidden="true"></i>
+    Google Calendar
+  </a>
+</div>

@@ -1,0 +1,40 @@
+<section id="prezentare" class="hero" aria-label="Prezentare">
+  <div class="hero-bg-overlay"></div>
+
+  <div class="container hero-content">
+    <h1 class="hero-title">
+      Adunarea <span class="hero-accent">de Magie</span>
+    </h1>
+
+    <p class="hero-subtitle">
+      Cea mai activă comunitate Magic: The Gathering din București.<br>
+      Commander Casual, Commander Competitiv, Pauper și evenimente speciale — toate serile MTG ale comunității într-un singur loc.
+    </p>
+
+    <div class="hero-actions">
+      <a routerLink="/evenimente" class="btn btn-primary btn-lg">
+        <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+        Vezi Evenimente
+      </a>
+      <a routerLink="/galerie" class="btn btn-outline-light btn-lg">
+        <i class="fas fa-images" aria-hidden="true"></i>
+        Galerie Evenimente
+      </a>
+    </div>
+
+    <div class="hero-stats" *ngIf="stats.length">
+      <ng-container *ngFor="let stat of stats; let last = last">
+        <div class="stat">
+          <span class="stat-number">{{ stat.value }}</span>
+          <span class="stat-label">{{ stat.label }}</span>
+        </div>
+        <div class="stat-divider" aria-hidden="true" *ngIf="!last"></div>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="hero-scroll-hint" aria-hidden="true">
+    <span>Scroll</span>
+    <i class="fas fa-chevron-down"></i>
+  </div>
+</section>

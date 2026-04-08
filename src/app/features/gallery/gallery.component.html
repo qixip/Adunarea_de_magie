@@ -1,0 +1,59 @@
+﻿<div class="gallery-container">
+  <div class="gallery-header">
+    <h1 class="gallery-title">
+      <i class="fas fa-images"></i>
+      Galerie Evenimente MTG
+    </h1>
+    <p class="gallery-subtitle">
+      Momente memorabile din turneele, draft-urile și prerelease-urile organizate de comunitatea noastră din București.
+    </p>
+  </div>
+
+  <!-- Gallery Categories -->
+  <div class="gallery-filters">
+    <button class="filter-btn active">
+      <i class="fas fa-th"></i>
+      Toate
+    </button>
+    <button class="filter-btn">
+      <i class="fas fa-trophy"></i>
+      Turnee
+    </button>
+    <button class="filter-btn">
+      <i class="fas fa-cards"></i>
+      Draft
+    </button>
+    <button class="filter-btn">
+      <i class="fas fa-star"></i>
+      Prerelease
+    </button>
+    <button class="filter-btn">
+      <i class="fas fa-users"></i>
+      Commander
+    </button>
+  </div>
+
+  <!-- Gallery Grid -->
+  <div class="gallery-grid">
+    <!-- Placeholder for images - to be populated with actual event photos -->
+    <div class="gallery-item" *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,11,12]">
+      <div class="gallery-image-placeholder">
+        <i class="fas fa-image"></i>
+        <p>Fotografie Eveniment {{ i }}</p>
+      </div>
+      <div class="gallery-overlay">
+        <h3>Eveniment MTG</h3>
+        <p>Click pentru detalii</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Coming Soon Notice -->
+  <div class="gallery-notice">
+    <i class="fas fa-info-circle"></i>
+    <div>
+      <h3>Galerie în Construcție</h3>
+      <p>Fotografiile din evenimentele noastre vor fi adăugate în curând. Urmărește-ne pe social media pentru actualizări live!</p>
+    </div>
+  </div>
+</div>

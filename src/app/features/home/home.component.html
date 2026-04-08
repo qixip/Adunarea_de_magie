@@ -1,0 +1,12 @@
+﻿<app-home-hero-section [stats]="heroStats"></app-home-hero-section>
+
+<app-home-events-preview-section></app-home-events-preview-section>
+
+<app-home-contact-section
+  [contactForm]="contactForm"
+  [isSubmitting]="isSubmitting"
+  [submitSuccess]="submitSuccess"
+  [submitError]="submitError"
+  [socialLinks]="socialLinks"
+  (submitForm)="onSubmit()">
+</app-home-contact-section>

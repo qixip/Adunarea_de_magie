@@ -1,0 +1,36 @@
+<nav class="navbar" [class.scrolled]="isScrolled" [class.mobile-open]="isMobileOpen">
+  <div class="container navbar-inner">
+
+    <!-- Left group: Logo + main links -->
+    <div class="navbar-left">
+      <a class="navbar-brand" routerLink="/" aria-label="Adunarea de Magie – Acasa">
+        <img src="assets/images/Logo_navbar.png" alt="Adunarea de Magie" style="height: 30px !important; width: auto !important; max-height: 30px !important; display: block !important;">
+      </a>
+      <ul class="navbar-links" role="navigation" aria-label="Navigare principala">
+        <li *ngFor="let link of leftLinks">
+          <a class="nav-link" (click)="navigate(link)" [class.active]="!link.fragment && router.isActive(link.path, { paths: 'exact', queryParams: 'ignored', fragment: 'ignored', matrixParams: 'ignored' })" role="button" tabindex="0" (keydown.enter)="navigate(link)">{{ link.label }}</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Right group: Contact + Login -->
+    <div class="navbar-right">
+      <ul class="navbar-links" role="navigation" aria-label="Navigare secundara">
+        <li *ngFor="let link of rightLinks">
+          <a class="nav-link" (click)="navigate(link)" role="button" tabindex="0" (keydown.enter)="navigate(link)">{{ link.label }}</a>
+        </li>
+      </ul>
+      <a routerLink="/auth" class="btn-login navbar-cta"><i class="fas fa-user"></i><span>Login</span></a>
+    </div>
+
+    <!-- Hamburger -->
+    <button class="hamburger" (click)="toggleMobile()" [attr.aria-expanded]="isMobileOpen"><span></span><span></span><span></span></button>
+
+  </div>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobile-menu" [class.open]="isMobileOpen">
+    <ul><li *ngFor="let link of navLinks"><a (click)="navigate(link)" role="button" tabindex="0">{{ link.label }}</a></li></ul>
+    <a routerLink="/auth" class="btn-login" (click)="isMobileOpen = false"><i class="fas fa-user"></i> Login</a>
+  </div>
+</nav>

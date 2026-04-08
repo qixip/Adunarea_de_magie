@@ -1,0 +1,42 @@
+<section id="program" class="section section-alt" aria-labelledby="program-title">
+  <div class="container program-layout">
+    <div class="program-info">
+      <span class="section-tag">Formate MTG</span>
+      <h2 class="section-title" id="program-title">Cum se joacă la Adunarea de Magie</h2>
+      <div class="section-divider"></div>
+
+      <p class="program-copy">
+        La noi fiecare seară are propria energie: mese relaxate de Commander, pods cEDH, seri de Pauper și evenimente speciale create pentru comunitate.
+      </p>
+
+      <div class="program-actions">
+        <a routerLink="/evenimente" class="btn btn-primary">
+          <i class="fas fa-calendar-check" aria-hidden="true"></i>
+          Vezi pagina Evenimente
+        </a>
+      </div>
+
+      <div class="program-note">
+        <h3>
+          <i class="fas fa-hat-wizard" aria-hidden="true"></i>
+          Alege masa care ți se potrivește
+        </h3>
+        <p>
+          Fiecare format are propriul ritm, propriul nivel de intensitate și propria poveste. Indiferent dacă vii pentru fun, testare sau competiție, aici ai loc la masă.
+        </p>
+      </div>
+    </div>
+
+    <div class="formats-grid">
+      <article class="format-card" *ngFor="let format of formatHighlights">
+        <span class="format-chip">{{ format.tone }}</span>
+        <h3>{{ format.title }}</h3>
+        <p>{{ format.description }}</p>
+
+        <ul class="format-points">
+          <li *ngFor="let point of format.points">{{ point }}</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>

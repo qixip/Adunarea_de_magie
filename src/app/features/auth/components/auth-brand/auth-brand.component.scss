@@ -1,0 +1,21 @@
+.auth-brand {
+  margin-bottom: 24px;
+  text-align: center;
+
+  img {
+    display: block;
+    margin: 0 auto 12px;
+  }
+}
+
+.auth-title {
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+}
+
+.auth-subtitle {
+  margin-top: 8px;
+  color: rgba(255, 255, 255, 0.68);
+  line-height: 1.6;
+}

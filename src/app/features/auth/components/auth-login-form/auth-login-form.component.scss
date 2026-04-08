@@ -1,0 +1,44 @@
+.auth-form {
+  display: grid;
+  gap: 16px;
+}
+
+.form-group {
+  display: grid;
+  gap: 8px;
+
+  label {
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 600;
+  }
+}
+
+.form-control {
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(38, 172, 226, 0.18);
+  }
+
+  &.invalid {
+    border-color: #ff7a7a;
+  }
+}
+
+.field-error,
+.server-error {
+  color: #ff9b9b;
+  font-size: 0.85rem;
+}
+
+.btn-block {
+  width: 100%;
+  justify-content: center;
+}

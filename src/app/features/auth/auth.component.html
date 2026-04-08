@@ -1,0 +1,27 @@
+<div class="auth-page">
+  <div class="auth-card">
+    <app-auth-brand></app-auth-brand>
+
+    <app-auth-tabs
+      [activeTab]="activeTab"
+      (tabChange)="switchTab($event)">
+    </app-auth-tabs>
+
+    <app-auth-login-form
+      *ngIf="activeTab === 'login'"
+      [form]="loginForm"
+      [isLoading]="isLoading"
+      [error]="loginError"
+      (submitForm)="onLogin()">
+    </app-auth-login-form>
+
+    <app-auth-register-form
+      *ngIf="activeTab === 'register'"
+      [form]="registerForm"
+      [isLoading]="isLoading"
+      [error]="registerError"
+      [success]="registerSuccess"
+      (submitForm)="onRegister()">
+    </app-auth-register-form>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<div class="auth-tabs" role="tablist">
+  <button
+    type="button"
+    role="tab"
+    [attr.aria-selected]="activeTab === 'login'"
+    [class.active]="activeTab === 'login'"
+    (click)="selectTab('login')">
+    Autentificare
+  </button>
+  <button
+    type="button"
+    role="tab"
+    [attr.aria-selected]="activeTab === 'register'"
+    [class.active]="activeTab === 'register'"
+    (click)="selectTab('register')">
+    Cont Nou
+  </button>
+</div>

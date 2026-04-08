@@ -1,0 +1,22 @@
+.auth-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.auth-tabs button {
+  border: none;
+  border-radius: 8px;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &.active {
+    background: var(--color-primary);
+    color: #fff;
+  }
+}

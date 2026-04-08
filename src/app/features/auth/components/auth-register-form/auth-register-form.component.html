@@ -1,0 +1,55 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="auth-form" novalidate>
+  <div class="form-group">
+    <label for="reg-name">Nume complet</label>
+    <input
+      id="reg-name"
+      type="text"
+      formControlName="name"
+      class="form-control"
+      [class.invalid]="nameControl?.invalid && nameControl?.touched"
+      placeholder="Prenume Nume">
+    <span class="field-error" *ngIf="nameControl?.hasError('required') && nameControl?.touched">Numele este obligatoriu.</span>
+    <span class="field-error" *ngIf="nameControl?.hasError('minlength') && nameControl?.touched">Minim 2 caractere.</span>
+  </div>
+
+  <div class="form-group">
+    <label for="reg-email">Email</label>
+    <input
+      id="reg-email"
+      type="email"
+      formControlName="email"
+      class="form-control"
+      [class.invalid]="emailControl?.invalid && emailControl?.touched"
+      placeholder="email@exemplu.ro">
+    <span class="field-error" *ngIf="emailControl?.hasError('required') && emailControl?.touched">Emailul este obligatoriu.</span>
+    <span class="field-error" *ngIf="emailControl?.hasError('email') && emailControl?.touched">Format email invalid.</span>
+  </div>
+
+  <div class="form-group">
+    <label for="reg-pass">Parola</label>
+    <input
+      id="reg-pass"
+      type="password"
+      formControlName="password"
+      class="form-control"
+      [class.invalid]="passwordControl?.invalid && passwordControl?.touched"
+      placeholder="Minim 8 caractere">
+    <span class="field-error" *ngIf="passwordControl?.hasError('required') && passwordControl?.touched">Parola este obligatorie.</span>
+    <span class="field-error" *ngIf="passwordControl?.hasError('minlength') && passwordControl?.touched">Minim 8 caractere.</span>
+  </div>
+
+  <p class="server-error" *ngIf="error" role="alert">
+    <i class="fas fa-exclamation-circle"></i>
+    {{ error }}
+  </p>
+
+  <p class="success-msg" *ngIf="success" role="status">
+    <i class="fas fa-check-circle"></i>
+    Cont creat! Te poți autentifica acum.
+  </p>
+
+  <button type="submit" class="btn btn-primary btn-lg btn-block" [disabled]="form.invalid || isLoading">
+    <i class="fas fa-user-plus" aria-hidden="true"></i>
+    {{ isLoading ? 'Se creează...' : 'Creează Cont' }}
+  </button>
+</form>

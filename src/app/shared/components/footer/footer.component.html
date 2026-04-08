@@ -1,0 +1,35 @@
+﻿<footer class="footer">
+  <div class="container footer-content">
+    <div class="footer-brand">
+      <img src="assets/images/Logo_no_background.png" alt="Adunarea de Magie" height="48">
+      <p class="footer-tagline">Hub Evenimente MTG București</p>
+    </div>
+
+    <div class="footer-social">
+      <h3>Comunitate</h3>
+      <div class="social-links">
+        <a *ngFor="let s of socialLinks" [href]="s.url" target="_blank" rel="noopener noreferrer" class="social-link" [attr.aria-label]="s.name">
+          <i [class]="s.icon"></i>
+          <span>{{ s.name }}</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-contact">
+      <h3>Contact</h3>
+      <p>București, România</p>
+      <p>contact&#64;adunareademagie.ro</p>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container">
+      <p>&copy; {{ currentYear }} Adunarea de Magie</p>
+      <div class="footer-legal">
+        <a href="#">Termeni</a>
+        <span>•</span>
+        <a href="#">Confidențialitate</a>
+      </div>
+    </div>
+  </div>
+</footer>

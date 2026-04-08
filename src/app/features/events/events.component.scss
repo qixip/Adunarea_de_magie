@@ -1,0 +1,27 @@
+.events-page {
+  min-height: 100vh;
+  padding-top: var(--navbar-height);
+  background: var(--color-dark);
+}
+
+.events-section {
+  padding: 48px 0 80px;
+}
+
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.empty-state {
+  padding: 80px 0;
+  color: rgba(255, 255, 255, 0.3);
+  text-align: center;
+
+  i {
+    display: block;
+    margin-bottom: 16px;
+    font-size: 3rem;
+  }
+}

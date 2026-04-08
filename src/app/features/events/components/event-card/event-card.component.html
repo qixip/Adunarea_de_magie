@@ -1,0 +1,37 @@
+<a
+  class="event-card-link"
+  routerLink="/auth"
+  [attr.aria-label]="'Înscrie-te la evenimentul ' + event.title">
+  <article class="event-card" [class]="'event-card format-' + event.format.toLowerCase()">
+    <div class="card-frame">
+      <header class="card-name-line">
+        <h3 class="event-title">{{ event.title }}</h3>
+      </header>
+
+      <div class="card-art-frame">
+        <img
+          class="event-art-image"
+          [src]="event.imageUrl || fallbackImageUrl"
+          [alt]="event.title"
+          loading="lazy">
+        <div class="card-art-overlay" aria-hidden="true"></div>
+      </div>
+
+      <div class="card-type-line">
+        <span>{{ event.format }} • Comunitate MTG</span>
+        <span class="spots-pill" [class.low]="event.spotsLeft <= 5" *ngIf="event.status !== 'full'">
+          {{ event.spotsLeft }} locuri
+        </span>
+        <span class="spots-pill full" *ngIf="event.status === 'full'">Complet</span>
+      </div>
+
+      <div class="card-rules-box">
+        <div class="event-meta">
+          <span>{{ event.date }} - {{ event.time }} - {{ event.location }}</span>
+        </div>
+
+        <p class="event-description">{{ event.description }}</p>
+      </div>
+    </div>
+  </article>
+</a>
