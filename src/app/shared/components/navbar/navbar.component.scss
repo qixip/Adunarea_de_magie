@@ -1,19 +1,19 @@
-.navbar {
+﻿.navbar {
   position: fixed;
   top: 0;
+  padding-top: 20px;
   left: 0;
   right: 0;
   z-index: 1000;
-  height: 70px;
-  background: rgba(10, 14, 26, 0.95);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  height: 90px;
+  background: var(--color-primary);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   transition: all 0.3s ease;
 
   &.scrolled {
-    background: rgba(10, 14, 26, 0.98);
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
-    height: 64px;
+    background: var(--color-primary-dark);
+    box-shadow: var(--shadow-md);
+    height: 84px;
   }
 }
 
@@ -102,9 +102,7 @@
   transition: all 0.3s ease;
   flex-shrink: 0;
 
-  i {
-    font-size: 0.95rem;
-  }
+  i { font-size: 0.95rem; }
 
   &:hover {
     background: #1f2654;
@@ -112,103 +110,400 @@
   }
 }
 
-.hamburger {
-  display: none;
-  flex-direction: column;
-  justify-content: center;
-  gap: 5px;
-  width: 40px;
-  height: 40px;
-  padding: 8px;
-  margin-left: auto;
-  background: none;
+// ── Authenticated user area ───────────────────────────────────
+.navbar-user {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.player-card-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  background: linear-gradient(135deg, #aeef00, #ef00ae);
+  color: #17120d;
+  font-weight: 700;
+  font-size: 0.88rem;
+  border-radius: 8px;
   border: none;
   cursor: pointer;
-  border-radius: 8px;
-  transition: all 0.2s ease;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  flex-shrink: 0;
+
+  i { font-size: 0.9rem; }
 
   &:hover {
-    background: rgba(255, 255, 255, 0.1);
+    opacity: 0.88;
+    transform: translateY(-1px);
   }
 
-  span {
-    display: block;
-    width: 22px;
-    height: 2px;
-    background: white;
-    border-radius: 2px;
-    transition: all 0.3s ease;
-    transform-origin: center;
-  }
-
-  .mobile-open & {
-    span:nth-child(1) {
-      transform: translateY(7px) rotate(45deg);
-    }
-    span:nth-child(2) {
-      opacity: 0;
-      transform: scaleX(0);
-    }
-    span:nth-child(3) {
-      transform: translateY(-7px) rotate(-45deg);
-    }
+  &:focus-visible {
+    outline: 2px solid #aeef00;
+    outline-offset: 2px;
   }
 }
 
-.mobile-menu {
-  display: none;
-  flex-direction: column;
+.btn-logout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+
+  &:hover {
+    background: rgba(220, 53, 69, 0.15);
+    border-color: rgba(220, 53, 69, 0.4);
+    color: #dc3545;
+  }
+}
+
+// ── Mobile user area (inside dropdown) ───────────────────────
+.mobile-user {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+  padding: 10px 12px;
+  background: rgba(174, 239, 0, 0.08);
+  border-radius: 8px;
+
+  .btn-logout {
+    width: auto;
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    gap: 6px;
+    color: rgba(255, 255, 255, 0.7);
+
+    &:hover { color: #dc3545; }
+  }
+}
+
+.mobile-player-card-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: linear-gradient(135deg, #aeef00, #ef00ae);
+  color: #17120d;
+  font-weight: 700;
+  font-size: 0.88rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+
+  i { font-size: 0.85rem; }
+
+  &:hover { opacity: 0.88; }
+}
+
+// ── Arcana Inn floating animation ─────────────────────────────
+@keyframes arcana-float {
+  0%, 100% {
+    transform: translateY(0px);
+    filter:
+      drop-shadow(0 0 3px rgba(255, 185, 0, 0.20))
+      drop-shadow(0 0 7px rgba(255, 185, 0, 0.10));
+  }
+  50% {
+    transform: translateY(-9px);
+    filter:
+      drop-shadow(0 0 7px rgba(255, 185, 0, 0.90))
+      drop-shadow(0 0 18px rgba(255, 185, 0, 0.50));
+  }
+}
+
+.arcana-inn-btn {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+  margin: 0 4px;
+
+  img {
+    height: 38px;
+    width: auto;
+    display: block;
+    animation: arcana-float 3.5s ease-in-out infinite;
+  }
+}
+
+.arcana-inn-mobile-btn {
+  display: flex;
+  align-items: center;
   gap: 12px;
-  background: rgba(10, 14, 26, 0.98);
-  padding: 0 24px;
-  max-height: 0;
-  overflow: hidden;
-  transition: all 0.35s ease;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 12px 16px;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.2s ease;
 
-  &.open {
-    max-height: 400px;
-    padding: 24px;
-  }
+  &:hover { background: rgba(255, 255, 255, 0.08); }
 
-  ul {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  a {
+  img {
+    height: 28px;
+    width: auto;
     display: block;
-    padding: 12px 16px;
-    color: rgba(255, 255, 255, 0.85);
-    font-size: 1rem;
-    font-weight: 600;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-
-    &:hover {
-      color: white;
-      background: rgba(255, 255, 255, 0.08);
-    }
-  }
-
-  .btn-login {
-    margin-top: 12px;
-    justify-content: center;
+    flex-shrink: 0;
   }
 }
 
+// ── Admin Tools button (desktop) ──────────────────────────────
+.btn-admin-tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  background: rgba(255, 185, 0, 0.15);
+  border: 1px solid rgba(255, 185, 0, 0.4);
+  color: #ffb900;
+  font-weight: 700;
+  font-size: 0.88rem;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+
+  i { font-size: 0.9rem; }
+
+  &:hover {
+    background: rgba(255, 185, 0, 0.25);
+    border-color: rgba(255, 185, 0, 0.7);
+    color: #ffd040;
+  }
+}
+
+.btn-admin-tools-mobile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  color: #ffb900;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+
+  &:hover { background: rgba(255, 185, 0, 0.1); }
+}
+
+// ── Mobile bar (hidden on desktop) ───────────────────────────
+.mobile-bar { display: none; }
+
+// ── Mobile menu (hidden everywhere by default) ────────────────
+.mobile-menu { display: none; }
+
+// ── Responsive ────────────────────────────────────────────────
 @media (max-width: 900px) {
-  .navbar-left .navbar-links,
-  .navbar-right,
-  .navbar-cta {
+
+  // Hide desktop sections
+  .navbar-left,
+  .navbar-right {
     display: none;
   }
-  .hamburger {
-    display: flex;
+
+  // Remove navbar top padding on mobile (bar fills the height)
+  .navbar {
+    padding-top: 0;
   }
+
+  // ── 4-slot permanent mobile bar ──────────────────────────
+  .mobile-bar {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    height: 100%;
+  }
+
+  .mobile-slot {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    height: 100%;
+    padding: 0 4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.85);
+    transition: background 0.2s ease, color 0.2s ease;
+    position: relative;
+
+    &:hover,
+    &:focus-visible {
+      background: rgba(255, 255, 255, 0.07);
+      color: white;
+      outline: none;
+    }
+
+  }
+
+  .mobile-slot-label {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    color: inherit;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 72px;
+  }
+
+  // Slot 1 – Logo
+  .mobile-slot-logo {
+    img {
+      height: 24px;
+      width: auto;
+      display: block;
+    }
+  }
+
+  // Slot 2 – Arcana Inn
+  .mobile-slot-arcana {
+    img {
+      height: 24px;
+      width: auto;
+      display: block;
+      animation: arcana-float 3.5s ease-in-out infinite;
+    }
+  }
+
+  // Slot 3 – Admin
+  .mobile-slot-admin {
+    // container uses same flex centering as .mobile-slot
+  }
+
+  .mobile-admin-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    text-decoration: none;
+    color: #ffb900;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+
+    i { font-size: 1.15rem; }
+
+    .mobile-slot-label { color: #ffb900; }
+  }
+
+  // Slot 4 – User / Login
+  .mobile-user-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    width: 100%;
+    height: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #aeef00;
+
+    i { font-size: 1.15rem; }
+
+    .mobile-slot-label { color: #aeef00; }
+  }
+
+  .mobile-login-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.85);
+
+    i { font-size: 1.15rem; }
+  }
+
+  // ── Full-viewport dropdown ────────────────────────────────
   .mobile-menu {
     display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: fixed;
+    top: 90px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
+    background: var(--color-primary-dark);
+    padding: 24px;
+    overflow-y: auto;
+    // Hidden state
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+
+    &.open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    ul {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    a {
+      display: block;
+      padding: 14px 16px;
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 1.05rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        color: white;
+        background: rgba(255, 255, 255, 0.08);
+      }
+    }
+
+    .btn-login {
+      margin-top: 12px;
+      justify-content: center;
+    }
+  }
+
+  // Slot 5 – Menu toggle
+  .mobile-slot-menu {
+    color: rgba(255, 255, 255, 0.85);
+    i { font-size: 1.2rem; }
+    &[aria-expanded="true"] { color: white; }
+  }
+  // Shift dropdown top when navbar shrinks on scroll
+  .navbar.scrolled ~ * .mobile-menu,
+  .navbar.scrolled .mobile-menu {
+    top: 84px;
   }
 }

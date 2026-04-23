@@ -1,0 +1,49 @@
+﻿<section id="alatura-te" class="section section-dark" aria-labelledby="membership-title">
+  <div class="container">
+    <header class="section-header">
+      <span class="section-tag">Cum Te Alături</span>
+      <h2 class="section-title" id="membership-title">Devino Parte din Comunitate</h2>
+      <div class="section-divider"></div>
+      <p class="section-subtitle">
+        Trei pași simpli pentru a face parte din cea mai activă comunitate MTG din București.
+      </p>
+    </header>
+
+    <div class="steps-grid">
+      <article class="step-card" *ngFor="let step of joinSteps; let i = index">
+        <div class="step-number" aria-hidden="true">{{ i + 1 }}</div>
+        <div class="step-icon" aria-hidden="true">
+          <ng-container *ngIf="i === 0; else defaultIcon">
+            <i class="fab fa-whatsapp"></i>
+            <span class="icon-sep">/</span>
+            <i class="fab fa-discord"></i>
+          </ng-container>
+          <ng-template #defaultIcon>
+            <i [class]="step.icon"></i>
+          </ng-template>
+        </div>
+        <h3>{{ step.title }}</h3>
+        <p>{{ step.description }}</p>
+      </article>
+    </div>
+
+    <div class="membership-cta">
+      <h3>Gata să Înceapă Aventura?</h3>
+      <p>Intră în grupul nostru de WhatsApp sau Discord și prezintă-te - îți facem loc la masă!</p>
+      <div class="cta-actions">
+        <a href="https://chat.whatsapp.com/HOwTQ5cA6mt3OgtiaEFt3j"
+           target="_blank" rel="noopener noreferrer"
+           class="btn btn-primary btn-lg">
+          <i class="fab fa-whatsapp" aria-hidden="true"></i>
+          Intră pe WhatsApp
+        </a>
+        <a href="https://discord.gg/ZnXaK2EH"
+           target="_blank" rel="noopener noreferrer"
+           class="btn btn-outline-light btn-lg">
+          <i class="fab fa-discord" aria-hidden="true"></i>
+          Join Discord
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

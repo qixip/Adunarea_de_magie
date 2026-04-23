@@ -2,6 +2,8 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { NavLink } from '../../models/nav-link.model';
+import { AuthService } from '../../../core/services/auth.service';
+import { PlayerCardModalService } from '../../../core/services/player-card-modal.service';
 
 @Component({
   selector: 'app-navbar',
@@ -14,8 +16,9 @@ export class NavbarComponent implements OnInit {
   isMobileOpen = false;
 
   leftLinks: NavLink[] = [
-    { label: 'Prezentare', path: '/', fragment: 'prezentare' },
+    { label: 'Prezentare', path: '/', fragment: 'despre' },
     { label: 'Evenimente', path: '/evenimente' },
+    { label: 'Preturi',    path: '/preturi' },
     { label: 'Galerie',    path: '/galerie' }
   ];
 
@@ -25,12 +28,36 @@ export class NavbarComponent implements OnInit {
 
   navLinks: NavLink[] = [...this.leftLinks, ...this.rightLinks, { label: 'Login', path: '/auth' }];
 
-  constructor(public router: Router) {}
+  /** Nav links shown in the mobile dropdown (login handled separately by the 4-slot bar). */
+  mobileNavLinks: NavLink[] = [...this.leftLinks, ...this.rightLinks];
+
+  constructor(
+    public router: Router,
+    public auth: AuthService,
+    private playerCardModal: PlayerCardModalService,
+  ) {}
 
   ngOnInit(): void {
     this.router.events
       .pipe(filter(e => e instanceof NavigationEnd))
       .subscribe(() => { this.isMobileOpen = false; });
+  }
+
+  get firstName(): string {
+    const name = this.auth.currentUser?.name ?? '';
+    return name.split(' ')[0];
+  }
+
+  openPlayerCard(): void {
+    this.isMobileOpen = false;
+    this.playerCardModal.open();
+  }
+
+  logout(): void {
+    this.auth.logout();
+    this.isMobileOpen = false;
+    this.playerCardModal.close();
+    this.router.navigate(['/']);
   }
 
   @HostListener('window:scroll')

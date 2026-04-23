@@ -1,7 +1,7 @@
 .events-page {
   min-height: 100vh;
   padding-top: var(--navbar-height);
-  background: var(--color-dark);
+  background: #00aeef;
 }
 
 .events-section {
@@ -10,8 +10,20 @@
 
 .events-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+
+  @media (max-width: 900px)  { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 560px)  { grid-template-columns: 1fr; }
+}
+
+.card-clickable {
+  cursor: pointer;
+  &:focus-visible {
+    outline: 2px solid #00aeef;
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
 }
 
 .empty-state {

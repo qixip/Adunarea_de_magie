@@ -1,37 +1,109 @@
-<a
-  class="event-card-link"
-  routerLink="/auth"
-  [attr.aria-label]="'Înscrie-te la evenimentul ' + event.title">
-  <article class="event-card" [class]="'event-card format-' + event.format.toLowerCase()">
-    <div class="card-frame">
-      <header class="card-name-line">
-        <h3 class="event-title">{{ event.title }}</h3>
-      </header>
+﻿<article class="event-card" [ngClass]="formatClass">
+  <div class="card-frame">
 
-      <div class="card-art-frame">
-        <img
-          class="event-art-image"
-          [src]="event.imageUrl || fallbackImageUrl"
-          [alt]="event.title"
-          loading="lazy">
-        <div class="card-art-overlay" aria-hidden="true"></div>
+    <header class="card-name-line">
+      <h3 class="event-title">{{ event.title }}</h3>
+    </header>
+
+    <div class="card-art-frame">
+      <img
+        class="event-art-image"
+        [src]="event.imageUrl || fallbackImageUrl"
+        [alt]="event.title"
+        loading="lazy">
+      <div class="card-art-overlay" aria-hidden="true"></div>
+    </div>
+
+    <div class="card-type-line">
+      <span>{{ event.format }} &bull; Comunitate MTG</span>
+      <span class="spots-pill" [class.low]="event.spotsLeft <= 5" *ngIf="event.status !== 'full' && event.spotsLeft > 0">
+        {{ event.spotsLeft }} locuri
+      </span>
+      <span class="spots-pill full" *ngIf="event.status === 'full' || event.spotsLeft <= 0">Complet</span>
+    </div>
+
+    <div class="card-rules-box">
+      <div class="event-meta">
+        <span>{{ event.date }} &middot; {{ event.time }} &middot; {{ event.location }}</span>
       </div>
 
-      <div class="card-type-line">
-        <span>{{ event.format }} • Comunitate MTG</span>
-        <span class="spots-pill" [class.low]="event.spotsLeft <= 5" *ngIf="event.status !== 'full'">
-          {{ event.spotsLeft }} locuri
-        </span>
-        <span class="spots-pill full" *ngIf="event.status === 'full'">Complet</span>
-      </div>
+      <p class="event-description" *ngIf="event.description">{{ event.description }}</p>
 
-      <div class="card-rules-box">
-        <div class="event-meta">
-          <span>{{ event.date }} - {{ event.time }} - {{ event.location }}</span>
-        </div>
+      <!-- Registration action area -->
+      <div class="event-register">
 
-        <p class="event-description">{{ event.description }}</p>
+        <!-- idle: show price + register button -->
+        <ng-container *ngIf="regState === 'idle'">
+          <span class="price-tag" [class.included]="isIncluded" [class.free]="event.eventType === 'open-market'">
+            <i class="fas" [class.fa-star]="isIncluded" [class.fa-tag]="!isIncluded" aria-hidden="true"></i>
+            {{ priceLabel }}
+          </span>
+          <button
+            class="btn-register"
+            (click)="onRegisterClick()"
+            [disabled]="isFull"
+            [attr.aria-label]="'Inscrie-te la ' + event.title">
+            <ng-container *ngIf="!isFull">
+              <i class="fas fa-calendar-check" aria-hidden="true"></i>
+              {{ isAuthenticated ? 'Rezerva loc' : 'Autentifica-te' }}
+            </ng-container>
+            <ng-container *ngIf="isFull">
+              <i class="fas fa-ban" aria-hidden="true"></i>
+              Complet
+            </ng-container>
+          </button>
+        </ng-container>
+
+        <!-- confirming -->
+        <ng-container *ngIf="regState === 'confirming'">
+          <p class="confirm-prompt">
+            <i class="fas fa-info-circle" aria-hidden="true"></i>
+            Cost: <strong>{{ amountDue === 0 ? 'Gratuit' : amountDue + ' RON' }}</strong>
+            <span *ngIf="amountDue > 0"> &middot; achitat la eveniment</span>
+          </p>
+          <div class="confirm-actions">
+            <button class="btn-confirm" (click)="confirm()">Confirma</button>
+            <button class="btn-cancel"  (click)="cancel()">Anuleaza</button>
+          </div>
+        </ng-container>
+
+        <!-- loading -->
+        <ng-container *ngIf="regState === 'loading'">
+          <span class="reg-status loading">
+            <i class="fas fa-spinner fa-spin" aria-hidden="true"></i>
+            Se proceseaza&hellip;
+          </span>
+        </ng-container>
+
+        <!-- done -->
+        <ng-container *ngIf="regState === 'done'">
+          <span class="reg-status success">
+            <i class="fas fa-check-circle" aria-hidden="true"></i>
+            {{ regMessage }}
+          </span>
+        </ng-container>
+
+        <!-- error -->
+        <ng-container *ngIf="regState === 'error'">
+          <span class="reg-status error-msg">
+            <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
+            {{ regMessage }}
+          </span>
+          <button class="btn-cancel" (click)="retry()">Reincearca</button>
+        </ng-container>
+
       </div>
     </div>
-  </article>
-</a>
+
+    <!-- Location button on the white ellipse at the bottom border -->
+    <a class="maps-btn"
+       href="https://www.google.com/maps/place/Bulevardul+Ferdinand+I+126A,+021396+Bucure%C8%99ti/@44.4464722,26.1283407,16.75z/data=!4m6!3m5!1s0x40b1f8d31aeb9fa9:0xe24bb3ef33e72776!8m2!3d44.443737!4d26.131302!16s%2Fg%2F11tnm1x1x0?entry=ttu&g_ep=EgoyMDI2MDQxNS4wIKXMDSoASAFQAw%3D%3D"
+       target="_blank"
+       rel="noopener noreferrer"
+       aria-label="Deschide in Google Maps"
+       (click)="$event.stopPropagation()">
+      <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+    </a>
+
+  </div>
+</article>

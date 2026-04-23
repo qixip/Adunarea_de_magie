@@ -1,54 +1,40 @@
-.event-card-link {
-  display: block;
-  color: inherit;
-  text-decoration: none;
-
-  &:focus-visible {
-    outline: none;
-  }
-
-  &:focus-visible .event-card {
-    outline: 3px solid rgba(59, 130, 246, 0.65);
-    outline-offset: 4px;
-    transform: translateY(-4px);
-    filter: brightness(1.03);
-  }
-}
-
-.event-card {
+﻿.event-card {
   cursor: pointer;
-  transition: transform 0.2s ease, filter 0.2s ease;
+  transition: transform 0.22s ease, filter 0.22s ease;
 
   &:hover {
     transform: translateY(-6px);
-    filter: brightness(1.02);
+    filter: brightness(1.04);
   }
 }
 
 .card-frame {
   display: grid;
-  grid-template-rows: 9.5% 48% 6.5% 26.5%;
+  grid-template-rows: 9% 44% 6% 32%;
   gap: 1.2%;
   width: 100%;
   aspect-ratio: 744 / 1020;
-  padding: 3.2% 6% 6.5%;
-  background: url('/assets/images/Event_card_outline.png') center / 100% 100% no-repeat;
+  padding: 3.2% 6% 6%;
+  background:
+    url('/assets/images/Event_card_outline.png') center / 100% 100% no-repeat,
+    url('/assets/images/card-background.png') center / 100% 100% no-repeat;
+  border-radius: 4.5% / 3.2%;
+  overflow: hidden;
   filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.35));
 }
 
 .card-name-line {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
   padding: 0 8px;
 }
 
 .event-title {
   margin: 0;
-  margin-top: 11px;
+  margin-top: 16px;
+  font-family: 'Beleren', serif;
   color: #17120d;
-  font-size: clamp(0.9rem, 1.4vw, 1rem);
+  font-size: clamp(0.88rem, 1.3vw, 1rem);
   font-weight: 800;
   line-height: 1.2;
   display: -webkit-box;
@@ -75,20 +61,28 @@
 .card-art-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(0, 0, 0, 0.18) 100%);
+  background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.18) 100%);
 }
-
-
 
 .card-type-line {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   padding: 0 10px;
-  margin-top: -18px;
+  margin-top: 22px;
   color: #1b1610;
-  font-size: 0.72rem;
+  font-size: 0.65rem;
   font-weight: 700;
+  flex-wrap: nowrap;
+  overflow: hidden;
+
+  > span:first-child {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+    flex: 1;
+  }
 }
 
 .spots-pill {
@@ -96,38 +90,37 @@
   color: #2a2219;
   font-weight: 800;
 
-  &.low {
-    color: #9a4d00;
-  }
-
-  &.full {
-    color: #b3261e;
-  }
+  &.low  { color: #9a4d00; }
+  &.full { color: #b3261e; }
 }
 
 .card-rules-box {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  min-height: 0;
-  padding: 12px;
-  gap: 20px;
+  padding: 48px 12px 10px;
+  gap: 6px;
   color: #231b14;
+  min-height: 0;
 }
 
 .event-meta {
-  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
 
-  span {
-    display: block;
-    color: #3a3028;
-    font-size: 0.8rem;
-    font-weight: 600;
-    line-height: 1.4;
-  }
+.event-meta span {
+  display: block;
+  color: #3a3028;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.35;
 }
 
 .event-description {
+  font-family: 'Mplantin', serif;
   color: #31271e;
   font-size: 0.8rem;
   line-height: 1.45;
@@ -135,37 +128,74 @@
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 4;
   overflow: hidden;
+  margin: 0;
 }
 
-.event-card.format-draft .card-art-frame {
-  background: linear-gradient(135deg, #7f1d1d 0%, #b91c1c 45%, #111827 100%);
+
+// ── Price row ─────────────────────────────────────
+
+.card-price-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 6px;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
 }
 
-.event-card.format-standard .card-art-frame {
-  background: linear-gradient(135deg, #0f3f7a 0%, #1d4ed8 45%, #08121f 100%);
+.price-label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #3a3028;
+
+  i { font-size: 0.7rem; }
+
+  &.included {
+    color: #1a7a3a;
+    i { color: #1a7a3a; }
+  }
 }
 
-.event-card.format-commander .card-art-frame {
+.tap-hint {
+  font-size: 0.65rem;
+  color: rgba(44, 54, 145, 0.6);
+  font-style: italic;
+}
+
+// ── Format-specific art tints ─────────────────────
+
+.event-card.format-commander-casual .card-art-frame {
   background: linear-gradient(135deg, #4c1d95 0%, #7c3aed 45%, #1c1234 100%);
 }
 
-.event-card.format-modern .card-art-frame {
+.event-card.format-commander-competitiv .card-art-frame {
+  background: linear-gradient(135deg, #0f3f7a 0%, #1d4ed8 45%, #08121f 100%);
+}
+
+.event-card.format-pauper .card-art-frame {
   background: linear-gradient(135deg, #14532d 0%, #16a34a 45%, #08160e 100%);
 }
 
-.event-card.format-sealed .card-art-frame {
+.event-card.format-special-event .card-art-frame {
   background: linear-gradient(135deg, #9a3412 0%, #ea580c 45%, #22110a 100%);
 }
 
-.event-card.format-pioneer .card-art-frame {
-  background: linear-gradient(135deg, #7e1458 0%, #db2777 45%, #1f0a18 100%);
-}
+// ── Location button ───────────────────────────────
 
-@media (max-width: 560px) {
+.maps-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  transform: translate(1px, -2px);
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+
+  i {
+    color: #e7272d;
   }
-
-
-
-
-
-
+}

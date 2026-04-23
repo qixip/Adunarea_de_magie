@@ -1,0 +1,93 @@
+<div
+  class="modal-backdrop"
+  *ngIf="isOpen$ | async"
+  (click)="close()"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Cardul tău de jucător"
+>
+  <div class="modal-card-wrap" (click)="$event.stopPropagation()">
+    <button class="modal-close" (click)="close()" aria-label="Închide">
+      <i class="fas fa-times"></i>
+    </button>
+
+    <ng-container *ngIf="profile$ | async as profile; else noProfile">
+      <article class="player-card">
+        <div class="card-frame">
+
+          <!-- Name bar -->
+          <header class="card-name-line">
+            <h3 class="event-title">{{ profile.user.name }}</h3>
+            <span class="card-rank-tag" *ngIf="xpData$ | async as xp">{{ xp.rank }}</span>
+          </header>
+
+          <!-- QR code as card art -->
+          <div class="card-art-frame">
+            <div class="qr-wrap">
+              <qrcode
+                [qrdata]="profile.user.id"
+                [width]="200"
+                [margin]="2"
+                errorCorrectionLevel="M"
+                elementType="svg"
+                colorDark="#000000"
+                colorLight="#ffffff"
+              ></qrcode>
+            </div>
+          </div>
+
+          <!-- Type line -->
+          <div class="card-type-line">
+            <span>Legendary Creature — A brave MTG Player</span>
+          </div>
+
+          <!-- Rules box → subscription info -->
+          <div class="card-rules-box">
+            <div class="player-sub-area">
+              <ng-container *ngIf="profile.subscription; else noSub">
+                <div class="sub-badge active">
+                  <i class="fas fa-crown"></i>
+                  <span>{{ subTypeLabel(profile.subscription.type) }}</span>
+                </div>
+                <div class="sub-dates">
+                  <i class="fas fa-calendar-alt"></i>
+                  <span>
+                    {{ formatDate(profile.subscription.valid_from) }}
+                    &ndash;
+                    {{ formatDate(profile.subscription.valid_until) }}
+                  </span>
+                </div>
+              </ng-container>
+              <ng-template #noSub>
+                <div class="sub-badge inactive">
+                  <i class="fas fa-times-circle"></i>
+                  <span>Fără abonament activ</span>
+                </div>
+              </ng-template>
+            </div>
+
+            <div class="card-price-row">
+              <span class="player-id-tag">
+                <i class="fas fa-fingerprint"></i>
+                {{ profile.user.id | slice:0:8 }}&hellip;
+              </span>
+              <span class="player-card-label">Player Card</span>
+            </div>
+          </div>
+
+        </div>
+      </article>
+
+      <!-- XP bar — lives outside the MTG card frame -->
+      <div class="xp-bar-wrap" *ngIf="xpData$ | async as xp">
+        <app-xp-bar [xpData]="xp"></app-xp-bar>
+      </div>
+    </ng-container>
+
+    <ng-template #noProfile>
+      <div class="loading-card">
+        <i class="fas fa-spinner fa-spin"></i>
+      </div>
+    </ng-template>
+  </div>
+</div>

@@ -1,0 +1,127 @@
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin-bottom: 64px;
+}
+
+.step-card {
+  position: relative;
+  padding: 32px 24px 28px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(135deg, #aeef00, #ef00ae);
+  text-align: center;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    border-color: rgba(38, 172, 226, 0.4);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.25);
+  }
+
+  h3 {
+    color: var(--color-light);
+    font-size: 1.05rem;
+    margin: 0 0 10px;
+  }
+
+  p {
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 0.92rem;
+    line-height: 1.65;
+    margin: 0;
+  }
+}
+
+.step-number {
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: var(--color-light);
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.step-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  color: #040707;
+  font-size: 5.6rem;
+}
+
+.membership-cta {
+  text-align: center;
+  padding: 48px 32px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+
+  h3 {
+    color: var(--color-light);
+    font-family: var(--font-heading);
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    margin-bottom: 12px;
+  }
+
+  p {
+    color: rgba(255, 255, 255, 0.72);
+    max-width: 520px;
+    margin: 0 auto 32px;
+    line-height: 1.7;
+  }
+}
+
+.cta-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+@media (max-width: 768px) {
+  .steps-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .membership-cta {
+    padding: 32px 20px;
+  }
+}
+
+// ── CTA button brand colours ──────────────────────────────────────────────────
+.cta-actions {
+  a:first-child {
+    background: #25D366;
+    border-color: #25D366;
+    color: #fff;
+    &:hover { background: #1daa52; border-color: #1daa52; }
+  }
+
+  a:last-child {
+    background: #5865F2;
+    border-color: #5865F2;
+    color: #fff;
+    &:hover { background: #4752c4; border-color: #4752c4; }
+  }
+}
+
+.icon-sep {
+  font-size: 2.8rem;
+  font-weight: 300;
+  color: #040707;
+  line-height: 1;
+  margin: 0 4px;
+}

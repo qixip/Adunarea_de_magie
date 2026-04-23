@@ -38,6 +38,19 @@
     <span class="field-error" *ngIf="passwordControl?.hasError('minlength') && passwordControl?.touched">Minim 8 caractere.</span>
   </div>
 
+  <div class="form-group">
+    <label for="reg-confirm-pass">Confirmă parola</label>
+    <input
+      id="reg-confirm-pass"
+      type="password"
+      formControlName="confirmPassword"
+      class="form-control"
+      [class.invalid]="(confirmPasswordControl?.invalid && confirmPasswordControl?.touched) || passwordMismatch"
+      placeholder="Repetă parola">
+    <span class="field-error" *ngIf="confirmPasswordControl?.hasError('required') && confirmPasswordControl?.touched">Confirmarea parolei este obligatorie.</span>
+    <span class="field-error" *ngIf="passwordMismatch">Parolele nu coincid.</span>
+  </div>
+
   <p class="server-error" *ngIf="error" role="alert">
     <i class="fas fa-exclamation-circle"></i>
     {{ error }}

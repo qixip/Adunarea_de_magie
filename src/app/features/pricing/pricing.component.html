@@ -1,0 +1,164 @@
+<!-- Hero -->
+<section class="pricing-hero section section-dark" aria-labelledby="pricing-title">
+  <div class="container pricing-hero-content">
+    <span class="section-tag">Pre&#x21B;uri &amp; Abonamente</span>
+    <h1 class="section-title" id="pricing-title">Alege Planul Potrivit</h1>
+    <div class="section-divider"></div>
+    <p class="section-subtitle">
+      Aboneaz&#x103;-te lunar pentru acces nelimitat &#x219;i pre&#x21B;uri reduse la evenimente,
+      sau vino la o sesiune ca vizitator.
+    </p>
+  </div>
+</section>
+
+<!-- Abonamente -->
+<section class="section" aria-labelledby="memberships-title">
+  <div class="container">
+    <header class="section-header">
+      <span class="section-tag">Abonamente</span>
+      <h2 class="section-title" id="memberships-title">Sesiuni de Joc</h2>
+      <div class="section-divider"></div>
+    </header>
+
+    <div class="memberships-grid">
+      <!-- Abonament Lunar -->
+      <article class="membership-card membership-card--highlighted">
+        <span class="membership-badge">Recomandat</span>
+        <div class="membership-price">
+          <span class="price-amount">150</span>
+          <div class="price-meta">
+            <span class="price-currency">RON</span>
+            <span class="price-period">/ lun&#x103;</span>
+          </div>
+        </div>
+        <h2 class="membership-name">Abonament Lunar</h2>
+        <p class="membership-description">
+          Acces nelimitat la toate sesiunile casual din luna curent&#x103;, plus reduceri la toate evenimentele.
+        </p>
+        <a href="https://chat.whatsapp.com/HOwTQ5cA6mt3OgtiaEFt3j"
+           target="_blank" rel="noopener noreferrer"
+           class="btn btn-primary btn-lg membership-cta">
+          Contact&#x103;m pe WhatsApp
+          <i class="fas fa-arrow-right" aria-hidden="true"></i>
+        </a>
+      </article>
+
+      <!-- Intrare Casual -->
+      <article class="membership-card">
+        <div class="membership-price">
+          <span class="price-amount">30</span>
+          <div class="price-meta">
+            <span class="price-currency">RON</span>
+            <span class="price-period">/ zi</span>
+          </div>
+        </div>
+        <h2 class="membership-name">Intrare Casual</h2>
+        <p class="membership-description">
+          O singur&#x103; sesiune, f&#x103;r&#x103; angajament. Ideal dac&#x103; vrei s&#x103; încerci înainte de a te abona.
+        </p>
+        <a href="https://chat.whatsapp.com/HOwTQ5cA6mt3OgtiaEFt3j"
+           target="_blank" rel="noopener noreferrer"
+           class="btn btn-outline-primary btn-lg membership-cta">
+          Contact&#x103;m pe WhatsApp
+          <i class="fas fa-arrow-right" aria-hidden="true"></i>
+        </a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Taxe Evenimente -->
+<section class="section section-alt" aria-labelledby="events-title">
+  <div class="container">
+    <header class="section-header">
+      <span class="section-tag">Evenimente</span>
+      <h2 class="section-title" id="events-title">Taxe de Participare</h2>
+      <div class="section-divider"></div>
+      <p class="section-subtitle">
+        Abona&#x21B;ii beneficiaz&#x103; de pre&#x21B;uri reduse la toate evenimentele.
+      </p>
+    </header>
+
+    <div class="events-table-wrapper">
+      <table class="events-table" aria-label="Taxe de participare la evenimente">
+        <thead>
+          <tr>
+            <th scope="col">Eveniment</th>
+            <th scope="col"><span class="col-standard">Standard</span></th>
+            <th scope="col">
+              <span class="col-member">
+                <i class="fas fa-star" aria-hidden="true"></i>
+                Abonat
+              </span>
+            </th>
+            <th scope="col">Economie</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let fee of eventFees">
+            <td class="event-name">{{ fee.name }}</td>
+            <td class="event-price-standard">
+              <span class="price-tag">{{ fee.standardPrice }} <small>RON</small></span>
+            </td>
+            <td class="event-price-member">
+              <span class="price-tag price-tag--member">{{ fee.memberPrice }} <small>RON</small></span>
+            </td>
+            <td class="event-savings">
+              <span class="savings-badge">{{ savingsPercent(fee) }}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="events-note">
+      <i class="fas fa-info-circle" aria-hidden="true"></i>
+      Pre&#x21B;urile pentru Prize Support se adaug&#x103; la Entry &#x219;i contribuie direct la premiile turneului.
+    </p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" aria-labelledby="faq-title">
+  <div class="container faq-container">
+    <header class="section-header">
+      <span class="section-tag">&#xCE;ntreb&#x103;ri Frecvente</span>
+      <h2 class="section-title" id="faq-title">Ai &#xCE;ntreb&#x103;ri?</h2>
+      <div class="section-divider"></div>
+    </header>
+
+    <div class="faq-list">
+      <div class="faq-item" *ngFor="let faq of faqs" [class.faq-item--open]="faq.open">
+        <button class="faq-question" (click)="toggleFaq(faq)" [attr.aria-expanded]="faq.open">
+          <span>{{ faq.question }}</span>
+          <i class="fas fa-chevron-down faq-icon" aria-hidden="true"></i>
+        </button>
+        <div class="faq-answer" [class.faq-answer--visible]="faq.open">
+          <p>{{ faq.answer }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Bottom CTA -->
+<section class="section section-dark pricing-cta-section" aria-label="Contact">
+  <div class="container pricing-cta-content">
+    <h2>Mai ai &#xEE;ntreb&#x103;ri?</h2>
+    <p>Contact&#x103;m pe WhatsApp sau Discord &#x219;i &#xEE;&#x21B;i r&#x103;spundem în cel mai scurt timp.</p>
+    <div class="pricing-cta-actions">
+      <a href="https://chat.whatsapp.com/HOwTQ5cA6mt3OgtiaEFt3j"
+         target="_blank" rel="noopener noreferrer"
+         class="btn btn-primary btn-lg">
+        <i class="fab fa-whatsapp" aria-hidden="true"></i>
+        WhatsApp
+      </a>
+      <a href="https://discord.gg/ZnXaK2EH"
+         target="_blank" rel="noopener noreferrer"
+         class="btn btn-outline-light btn-lg">
+        <i class="fab fa-discord" aria-hidden="true"></i>
+        Discord
+      </a>
+    </div>
+  </div>
+</section>

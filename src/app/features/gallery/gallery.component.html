@@ -1,59 +1,76 @@
-﻿<div class="gallery-container">
-  <div class="gallery-header">
-    <h1 class="gallery-title">
-      <i class="fas fa-images"></i>
-      Galerie Evenimente MTG
-    </h1>
-    <p class="gallery-subtitle">
-      Momente memorabile din turneele, draft-urile și prerelease-urile organizate de comunitatea noastră din București.
-    </p>
-  </div>
+<div class="gallery-page">
 
-  <!-- Gallery Categories -->
-  <div class="gallery-filters">
-    <button class="filter-btn active">
-      <i class="fas fa-th"></i>
-      Toate
-    </button>
-    <button class="filter-btn">
-      <i class="fas fa-trophy"></i>
-      Turnee
-    </button>
-    <button class="filter-btn">
-      <i class="fas fa-cards"></i>
-      Draft
-    </button>
-    <button class="filter-btn">
-      <i class="fas fa-star"></i>
-      Prerelease
-    </button>
-    <button class="filter-btn">
-      <i class="fas fa-users"></i>
-      Commander
-    </button>
-  </div>
+  <!-- Header -->
+  <header class="gallery-header">
+    <h1 class="gallery-title">Galerie Evenimente</h1>
+    <p class="gallery-subtitle">Momente din turneele, draft-urile și prerelease-urile comunității noastre din București.</p>
+  </header>
 
-  <!-- Gallery Grid -->
+  <!-- Filter bar -->
+  <nav class="gallery-filters" aria-label="Filtrează galeria">
+    <button
+      *ngFor="let cat of categories"
+      class="filter-btn"
+      [class.active]="activeCategory === cat"
+      (click)="setCategory(cat)">
+      {{ categoryLabels[cat] }}
+    </button>
+  </nav>
+
+  <!-- Mosaic grid -->
   <div class="gallery-grid">
-    <!-- Placeholder for images - to be populated with actual event photos -->
-    <div class="gallery-item" *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,11,12]">
-      <div class="gallery-image-placeholder">
-        <i class="fas fa-image"></i>
-        <p>Fotografie Eveniment {{ i }}</p>
-      </div>
-      <div class="gallery-overlay">
-        <h3>Eveniment MTG</h3>
-        <p>Click pentru detalii</p>
+    <div
+      class="gallery-item"
+      *ngFor="let img of filtered; let i = index; trackBy: trackByIndex"
+      [ngClass]="img.spanClass"
+      (click)="openLightbox(i)"
+      role="button"
+      tabindex="0"
+      [attr.aria-label]="'Deschide fotografia ' + (img.index + 1)"
+      (keydown.enter)="openLightbox(i)">
+      <img
+        [src]="img.src"
+        [alt]="'Foto eveniment ' + (img.index + 1)"
+        loading="lazy"
+        decoding="async" />
+      <div class="item-overlay" aria-hidden="true">
+        <i class="fas fa-search-plus"></i>
       </div>
     </div>
   </div>
 
-  <!-- Coming Soon Notice -->
-  <div class="gallery-notice">
-    <i class="fas fa-info-circle"></i>
-    <div>
-      <h3>Galerie în Construcție</h3>
-      <p>Fotografiile din evenimentele noastre vor fi adăugate în curând. Urmărește-ne pe social media pentru actualizări live!</p>
+  <!-- Lightbox -->
+  <div
+    class="lightbox"
+    *ngIf="lightboxIndex !== null"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Vizualizare fotografie"
+    (click)="closeLightbox()">
+
+    <button class="lb-close" (click)="closeLightbox()" aria-label="Închide">
+      <i class="fas fa-times"></i>
+    </button>
+
+    <button class="lb-nav lb-prev" (click)="$event.stopPropagation(); prev()" aria-label="Anterioară">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+
+    <div class="lb-img-wrap" (click)="$event.stopPropagation()">
+      <img
+        *ngIf="lightboxImage"
+        [src]="lightboxImage!.src"
+        [alt]="'Foto eveniment ' + (lightboxImage!.index + 1)" />
     </div>
+
+    <button class="lb-nav lb-next" (click)="$event.stopPropagation(); next()" aria-label="Următoarea">
+      <i class="fas fa-chevron-right"></i>
+    </button>
+
+    <div class="lb-counter" (click)="$event.stopPropagation()">
+      {{ lightboxIndex + 1 }} / {{ filtered.length }}
+    </div>
+
   </div>
+
 </div>

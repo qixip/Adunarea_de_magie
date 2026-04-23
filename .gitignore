@@ -40,3 +40,14 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Sensitive config — never commit real credentials
+public/api/config/database.php
+public/api/config/jwt.php
+
+# Claude AI assistant memory
+.claude/
+
+# Scratch / backup files
+src/styles.scss.backup
+styles-addon.txt

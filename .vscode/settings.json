@@ -1,0 +1,12 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^cmd /c \"dir \"\"c:\\\\Users\\\\User\\\\OneDrive\\\\Desktop\\\\Proiecte\\\\20260408 Project 005 - Adunarea de Magie \\[IT\\]\\\\Resurse\\\\Web\\\\src\\\\app\\\\shared\\\\components\"\" /s /b\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^cmd /c \"dir \"\"c:\\\\Users\\\\User\\\\OneDrive\\\\Desktop\\\\Proiecte\\\\20260408 Project 005 - Adunarea de Magie \\[IT\\]\\\\Resurse\\\\Web\\\\src\\\\app\\\\shared\"\" /s /b\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}

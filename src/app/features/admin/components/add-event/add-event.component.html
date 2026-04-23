@@ -1,0 +1,92 @@
+<div class="add-event-tool">
+  <h2><i class="fas fa-calendar-plus"></i> Adauga Eveniment</h2>
+  <p class="tool-desc">Completeaza formularul pentru a crea un eveniment nou in sistem.</p>
+
+  <div *ngIf="formState === 'success'" class="form-banner success">
+    <i class="fas fa-check-circle"></i>
+    <span>{{ successMsg }}</span>
+    <button class="btn btn-sm btn-outline-secondary" (click)="resetState()">
+      <i class="fas fa-plus"></i> Adauga alt eveniment
+    </button>
+  </div>
+
+  <div *ngIf="formState === 'error'" class="form-banner error">
+    <i class="fas fa-exclamation-triangle"></i>
+    <span>{{ errorMsg }}</span>
+    <button class="btn btn-sm btn-outline-secondary" (click)="resetState()">Incearca din nou</button>
+  </div>
+
+  <form *ngIf="formState === 'idle' || formState === 'loading'" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+    <div class="form-grid">
+
+      <div class="form-group full-width">
+        <label for="evt-title">Titlu eveniment <span class="req">*</span></label>
+        <input id="evt-title" type="text" formControlName="title" placeholder="ex. Commander Night #42"
+               [class.invalid]="isInvalid('title')">
+        <span class="error-msg" *ngIf="isInvalid('title')">Titlul este obligatoriu (min. 3 caractere).</span>
+      </div>
+
+      <div class="form-group">
+        <label for="evt-type">Tip eveniment <span class="req">*</span></label>
+        <select id="evt-type" formControlName="eventType">
+          <option *ngFor="let t of eventTypes" [value]="t">{{ eventTypeLabels[t] }}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Format (automat)</label>
+        <input type="text" [value]="formatForType" disabled class="disabled-input">
+      </div>
+
+      <div class="form-group">
+        <label for="evt-date">Data <span class="req">*</span></label>
+        <input id="evt-date" type="date" formControlName="date" [class.invalid]="isInvalid('date')">
+        <span class="error-msg" *ngIf="isInvalid('date')">Data este obligatorie.</span>
+      </div>
+
+      <div class="form-group">
+        <label for="evt-time">Ora <span class="req">*</span></label>
+        <input id="evt-time" type="time" formControlName="time" [class.invalid]="isInvalid('time')">
+        <span class="error-msg" *ngIf="isInvalid('time')">Ora este obligatorie.</span>
+      </div>
+
+      <div class="form-group">
+        <label for="evt-location">Locatie <span class="req">*</span></label>
+        <input id="evt-location" type="text" formControlName="location" [class.invalid]="isInvalid('location')">
+        <span class="error-msg" *ngIf="isInvalid('location')">Locatia este obligatorie.</span>
+      </div>
+
+      <div class="form-group">
+        <label for="evt-capacity">Capacitate <span class="req">*</span></label>
+        <input id="evt-capacity" type="number" formControlName="capacity" min="1" max="500"
+               [class.invalid]="isInvalid('capacity')">
+        <span class="error-msg" *ngIf="isInvalid('capacity')">Capacitate invalida.</span>
+      </div>
+
+      <div class="form-group">
+        <label for="evt-fee-std">Taxa standard (RON)</label>
+        <input id="evt-fee-std" type="number" formControlName="feeStandard" min="0" step="0.50">
+      </div>
+
+      <div class="form-group">
+        <label for="evt-fee-mem">Taxa membru (RON)</label>
+        <input id="evt-fee-mem" type="number" formControlName="feeMember" min="0" step="0.50">
+      </div>
+
+      <div class="form-group full-width">
+        <label for="evt-desc">Descriere</label>
+        <textarea id="evt-desc" formControlName="description" rows="4"
+                  placeholder="Detalii optionale despre eveniment..."></textarea>
+      </div>
+
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary" [disabled]="formState === 'loading'">
+        <i class="fas" [class.fa-spinner]="formState === 'loading'" [class.fa-spin]="formState === 'loading'"
+           [class.fa-calendar-plus]="formState !== 'loading'"></i>
+        {{ formState === 'loading' ? 'Se salveaza...' : 'Creeaza Eveniment' }}
+      </button>
+    </div>
+  </form>
+</div>

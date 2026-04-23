@@ -9,17 +9,32 @@
     </app-events-filter-toolbar>
 
     <div class="events-grid" *ngIf="filtered.length; else noEvents">
-      <app-event-card
+      <div
+        class="card-clickable"
         *ngFor="let event of filtered; trackBy: trackByEventId"
-        [event]="event">
-      </app-event-card>
+        (click)="openModal(event)"
+        role="button"
+        tabindex="0"
+        [attr.aria-label]="'Detalii eveniment: ' + event.title"
+        (keydown.enter)="openModal(event)">
+        <app-event-card [event]="event"></app-event-card>
+      </div>
     </div>
 
     <ng-template #noEvents>
       <div class="empty-state">
         <i class="fas fa-calendar-times" aria-hidden="true"></i>
-        <p>Nu exista evenimente pentru filtrul selectat.</p>
+        <p>Nu există evenimente pentru filtrul selectat.</p>
       </div>
     </ng-template>
   </section>
+
+  <!-- Event detail modal -->
+  <app-event-detail-modal
+    *ngIf="selectedEvent"
+    [event]="selectedEvent!"
+    (close)="closeModal()"
+    (registered)="onRegistered()">
+  </app-event-detail-modal>
+
 </div>

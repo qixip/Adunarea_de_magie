@@ -1,0 +1,116 @@
+<div class="modal-backdrop" (click)="closeModal()" role="dialog" aria-modal="true" [attr.aria-labelledby]="'modal-event-title'">
+  <div class="modal-panel" (click)="$event.stopPropagation()">
+
+    <!-- Header -->
+    <div class="modal-header">
+      <span class="format-chip" [ngClass]="'type-' + event.eventType">{{ event.format }}</span>
+      <span class="spots-badge" [class.low]="event.spotsLeft <= 5 && !isFull" [class.full]="isFull">
+        <ng-container *ngIf="!isFull">{{ event.spotsLeft }} / {{ event.capacity }} locuri</ng-container>
+        <ng-container *ngIf="isFull">Complet</ng-container>
+      </span>
+      <button class="close-btn" (click)="closeModal()" aria-label="Închide">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <!-- Art banner -->
+    <div class="event-art">
+      <img [src]="event.imageUrl || fallbackImage" [alt]="event.title" />
+      <div class="art-overlay" aria-hidden="true"></div>
+    </div>
+
+    <!-- Body -->
+    <div class="modal-body">
+
+      <!-- Event info -->
+      <div class="event-info">
+        <h2 class="event-title" id="modal-event-title">{{ event.title }}</h2>
+        <div class="event-meta">
+          <span><i class="fas fa-calendar-day" aria-hidden="true"></i> {{ event.date }}</span>
+          <span><i class="fas fa-clock" aria-hidden="true"></i> {{ event.time }}</span>
+          <span class="modal-location">
+            <i class="fas fa-map-marker-alt" aria-hidden="true"></i> {{ event.location }}
+            <a class="maps-btn maps-btn-sm" href="https://www.google.com/maps/place/Bulevardul+Ferdinand+I+126A,+021396+Bucure%C8%99ti/@44.4464722,26.1283407,16.75z/data=!4m6!3m5!1s0x40b1f8d31aeb9fa9:0xe24bb3ef33e72776!8m2!3d44.443737!4d26.131302!16s%2Fg%2F11tnm1x1x0?entry=ttu&amp;g_ep=EgoyMDI2MDQxNS4wIKXMDSoASAFQAw%3D%3D"
+               target="_blank" rel="noopener noreferrer" aria-label="Deschide în Google Maps">
+              <i class="fas fa-external-link-alt" aria-hidden="true"></i> Maps
+            </a>
+          </span>
+        </div>
+        <p class="event-description" *ngIf="event.description">{{ event.description }}</p>
+      </div>
+
+      <!-- Requirements checklist -->
+      <div class="requirements-section">
+        <h3 class="section-heading">Cerințe participare</h3>
+        <ul class="requirements-list" role="list">
+          <li *ngFor="let req of requirements" class="req-item" [class.met]="req.met" [class.unmet]="!req.met">
+            <span class="req-icon" aria-hidden="true">
+              <i class="fas" [class.fa-check-circle]="req.met" [class.fa-times-circle]="!req.met"></i>
+            </span>
+            <div class="req-text">
+              <strong class="req-label">{{ req.label }}</strong>
+              <span class="req-desc">{{ req.description }}</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Price breakdown -->
+      <div class="price-section">
+        <h3 class="section-heading">Cost participare</h3>
+        <table class="price-table" aria-label="Detalii cost">
+          <tbody>
+            <tr *ngFor="let row of priceBreakdown" [class.highlight]="row.highlight">
+              <td class="price-label-cell">{{ row.label }}</td>
+              <td class="price-value-cell">{{ row.value }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div><!-- /modal-body -->
+
+    <!-- Footer actions -->
+    <div class="modal-footer">
+      <button class="btn-modal-cancel" (click)="closeModal()">Închide</button>
+
+      <!-- unauthenticated -->
+      <button class="btn-reserve" *ngIf="!isAuthenticated && regState === 'idle'" (click)="reserve()">
+        <i class="fas fa-sign-in-alt" aria-hidden="true"></i>
+        Autentifică-te
+      </button>
+
+      <!-- authenticated, not full, idle -->
+      <button class="btn-reserve" *ngIf="isAuthenticated && regState === 'idle' && !isFull" (click)="reserve()">
+        <i class="fas fa-calendar-check" aria-hidden="true"></i>
+        Rezervă<ng-container *ngIf="price > 0"> &ndash; {{ price }} RON</ng-container><ng-container *ngIf="price === 0"> Gratuit</ng-container>
+      </button>
+
+      <!-- full -->
+      <button class="btn-reserve btn-disabled" *ngIf="isAuthenticated && isFull && regState === 'idle'" disabled>
+        <i class="fas fa-ban" aria-hidden="true"></i>
+        Complet
+      </button>
+
+      <!-- loading -->
+      <button class="btn-reserve btn-loading" *ngIf="regState === 'loading'" disabled>
+        <i class="fas fa-spinner fa-spin" aria-hidden="true"></i>
+        Se procesează...
+      </button>
+
+      <!-- done -->
+      <div class="reg-status reg-success" *ngIf="regState === 'done'">
+        <i class="fas fa-check-circle" aria-hidden="true"></i>
+        {{ regMessage }}
+      </div>
+
+      <!-- error -->
+      <div class="reg-status reg-error" *ngIf="regState === 'error'">
+        <span><i class="fas fa-exclamation-triangle" aria-hidden="true"></i> {{ regMessage }}</span>
+        <button class="btn-retry" (click)="regState = 'idle'">Reîncearcă</button>
+      </div>
+
+    </div><!-- /modal-footer -->
+
+  </div><!-- /modal-panel -->
+</div><!-- /modal-backdrop -->

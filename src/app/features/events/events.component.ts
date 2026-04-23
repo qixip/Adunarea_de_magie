@@ -14,6 +14,7 @@ export class EventsComponent implements OnInit {
   private allEvents: MtgEvent[] = [];
   filtered: MtgEvent[] = [];
   activeFormat: FilterFormat = 'all';
+  selectedEvent: MtgEvent | null = null;
 
   readonly formats: FilterFormat[] = [
     'all', 'Commander Casual', 'Commander Competitiv', 'Pauper', 'Special Event'
@@ -31,6 +32,22 @@ export class EventsComponent implements OnInit {
   setFormat(format: FilterFormat): void {
     this.activeFormat = format;
     this.applyFilter();
+  }
+
+  openModal(event: MtgEvent): void {
+    this.selectedEvent = event;
+  }
+
+  closeModal(): void {
+    this.selectedEvent = null;
+  }
+
+  onRegistered(): void {
+    this.closeModal();
+    this.eventService.getAll().subscribe(events => {
+      this.allEvents = events;
+      this.applyFilter();
+    });
   }
 
   trackByEventId(_index: number, event: MtgEvent): string {

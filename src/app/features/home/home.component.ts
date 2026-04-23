@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SocialLink } from '../../shared/models/social-link.model';
-import { HeroStat } from './components/home-hero-section/home-hero-section.component';
+import { ContactService } from '../../core/services/contact.service';
 
 @Component({
   selector: 'app-home',
@@ -15,11 +15,6 @@ export class HomeComponent implements OnInit {
   submitSuccess = false;
   submitError: string | null = null;
 
-  readonly heroStats: HeroStat[] = [
-    { value: '50+', label: 'Evenimente/An' },
-    { value: '300+', label: 'Jucători Activi' },
-    { value: '5+', label: 'Ani Comunitate' }
-  ];
 
   readonly socialLinks: SocialLink[] = [
     { name: 'Instagram', icon: 'fab fa-instagram',  url: 'https://www.instagram.com/adunareademagie?igsh=cjRuOXAyNnR0czM2', label: '@adunareademagie', color: '#E1306C' },
@@ -29,7 +24,7 @@ export class HomeComponent implements OnInit {
     { name: 'Discord',   icon: 'fab fa-discord',    url: 'https://discord.gg/ZnXaK2EH', label: 'Discord Server', color: '#5865F2' }
   ];
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private contactSvc: ContactService) {}
 
   ngOnInit(): void {
     this.contactForm = this.fb.group({
@@ -45,12 +40,18 @@ export class HomeComponent implements OnInit {
     this.isSubmitting = true;
     this.submitError = null;
 
-    // TODO: wire up to backend / form service
-    setTimeout(() => {
-      this.isSubmitting = false;
-      this.submitSuccess = true;
-      this.contactForm.reset();
-      setTimeout(() => { this.submitSuccess = false; }, 5000);
-    }, 1200);
+    const { name, email, message } = this.contactForm.value;
+    this.contactSvc.send({ name, email, message }).subscribe({
+      next: () => {
+        this.isSubmitting = false;
+        this.submitSuccess = true;
+        this.contactForm.reset();
+        setTimeout(() => { this.submitSuccess = false; }, 5000);
+      },
+      error: (err) => {
+        this.isSubmitting = false;
+        this.submitError = err?.error?.error ?? 'Eroare la trimitere. Încearcă din nou.';
+      }
+    });
   }
 }

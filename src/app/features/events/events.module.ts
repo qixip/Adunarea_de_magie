@@ -5,6 +5,7 @@ import { EventsComponent } from './events.component';
 import { EventsHeroComponent } from './components/events-hero/events-hero.component';
 import { EventsFilterToolbarComponent } from './components/events-filter-toolbar/events-filter-toolbar.component';
 import { EventCardComponent } from './components/event-card/event-card.component';
+import { EventDetailModalComponent } from './components/event-detail-modal/event-detail-modal.component';
 
 const routes: Routes = [
   { path: '', component: EventsComponent, title: 'Evenimente – Adunarea de Magie' }
@@ -15,7 +16,8 @@ const routes: Routes = [
     EventsComponent,
     EventsHeroComponent,
     EventsFilterToolbarComponent,
-    EventCardComponent
+    EventCardComponent,
+    EventDetailModalComponent,
   ],
   imports: [SharedModule, RouterModule.forChild(routes)]
 })

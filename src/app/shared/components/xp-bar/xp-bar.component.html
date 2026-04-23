@@ -1,0 +1,35 @@
+<div class="xp-section">
+
+  <!-- Level-up burst (floats above the bar) -->
+  <div class="levelup-burst" [class.active]="showLevelUpBurst">
+    <i class="fas fa-arrow-up"></i> NIVEL NOU!
+  </div>
+
+  <!-- Rank-up full-screen overlay -->
+  <div class="rankup-overlay" [class.active]="showRankUpBurst">
+    <div class="rankup-card">
+      <div class="rankup-label">RANK UP!</div>
+      <div class="rankup-name">{{ burstRankName }}</div>
+    </div>
+  </div>
+
+  <!-- Level · Rank · XP text row -->
+  <div class="xp-meta">
+    <span class="lvl-badge" [class.max]="isMaxLevel">
+      {{ isMaxLevel ? 'MAX' : 'LVL ' + displayedLevel }}
+    </span>
+    <span class="rank-label">{{ displayedRank }}</span>
+    <span class="xp-label">{{ xpText }}</span>
+  </div>
+
+  <!-- Progress bar -->
+  <div class="xp-track">
+    <div
+      class="xp-fill"
+      [class.max-glow]="isMaxLevel && fillPercent >= 100"
+      [style.width.%]="fillPercent"
+      [style.transition-duration]="fillDurationMs + 'ms'"
+    ></div>
+  </div>
+
+</div>

@@ -1,0 +1,30 @@
+<div class="admin-page">
+  <div class="container">
+    <header class="admin-header">
+      <h1><i class="fas fa-tools"></i> Admin Tools</h1>
+      <p>Instrumente rezervate conturilor de administrator.</p>
+    </header>
+
+    <div class="tool-tabs">
+      <button
+        class="tool-tab"
+        [class.active]="activeTool === 'scanner'"
+        (click)="setTool('scanner')">
+        <i class="fas fa-qrcode"></i>
+        Scanner QR
+      </button>
+      <button
+        class="tool-tab"
+        [class.active]="activeTool === 'add-event'"
+        (click)="setTool('add-event')">
+        <i class="fas fa-calendar-plus"></i>
+        Adaugă Eveniment
+      </button>
+    </div>
+
+    <div class="tool-panel">
+      <app-qr-scanner *ngIf="activeTool === 'scanner'"></app-qr-scanner>
+      <app-add-event  *ngIf="activeTool === 'add-event'"></app-add-event>
+    </div>
+  </div>
+</div>

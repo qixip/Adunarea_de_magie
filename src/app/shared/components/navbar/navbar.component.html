@@ -1,9 +1,9 @@
-<nav class="navbar" [class.scrolled]="isScrolled" [class.mobile-open]="isMobileOpen">
+﻿<nav class="navbar" [class.scrolled]="isScrolled" [class.mobile-open]="isMobileOpen">
   <div class="container navbar-inner">
 
-    <!-- Left group: Logo + main links -->
+    <!-- ── DESKTOP: Left group ──────────────────────────────── -->
     <div class="navbar-left">
-      <a class="navbar-brand" routerLink="/" aria-label="Adunarea de Magie – Acasa">
+      <a class="navbar-brand" routerLink="/" aria-label="Adunarea de Magie - Acasa">
         <img src="assets/images/Logo_navbar.png" alt="Adunarea de Magie" style="height: 30px !important; width: auto !important; max-height: 30px !important; display: block !important;">
       </a>
       <ul class="navbar-links" role="navigation" aria-label="Navigare principala">
@@ -11,26 +11,115 @@
           <a class="nav-link" (click)="navigate(link)" [class.active]="!link.fragment && router.isActive(link.path, { paths: 'exact', queryParams: 'ignored', fragment: 'ignored', matrixParams: 'ignored' })" role="button" tabindex="0" (keydown.enter)="navigate(link)">{{ link.label }}</a>
         </li>
       </ul>
+      <a href="https://arcanainn.ro/collections/all-mtg" target="_blank" rel="noopener noreferrer" class="arcana-inn-btn" aria-label="Arcana Inn - Magazin de carduri MTG">
+        <img src="assets/images/arcana%20inn%20logo.png" alt="Arcana Inn">
+      </a>
     </div>
 
-    <!-- Right group: Contact + Login -->
+    <!-- ── DESKTOP: Right group ─────────────────────────────── -->
     <div class="navbar-right">
       <ul class="navbar-links" role="navigation" aria-label="Navigare secundara">
         <li *ngFor="let link of rightLinks">
           <a class="nav-link" (click)="navigate(link)" role="button" tabindex="0" (keydown.enter)="navigate(link)">{{ link.label }}</a>
         </li>
       </ul>
-      <a routerLink="/auth" class="btn-login navbar-cta"><i class="fas fa-user"></i><span>Login</span></a>
+
+      <ng-container *ngIf="auth.isAuthenticated; else loginBtn">
+        <div class="navbar-user">
+          <a *ngIf="auth.isAdmin" routerLink="/admin" class="btn-admin-tools" title="Admin Tools">
+            <i class="fas fa-tools"></i>
+            <span>Admin Tools</span>
+          </a>
+          <button class="player-card-btn" (click)="openPlayerCard()" title="Cardul meu de jucator">
+            <i class="fas fa-user"></i>
+            <span>{{ firstName }}</span>
+          </button>
+          <button class="btn-logout" (click)="logout()" title="Deconectare">
+            <i class="fas fa-sign-out-alt"></i>
+          </button>
+        </div>
+      </ng-container>
+      <ng-template #loginBtn>
+        <a routerLink="/auth" class="btn-login navbar-cta"><i class="fas fa-user"></i><span>Login</span></a>
+      </ng-template>
     </div>
 
-    <!-- Hamburger -->
-    <button class="hamburger" (click)="toggleMobile()" [attr.aria-expanded]="isMobileOpen"><span></span><span></span><span></span></button>
+    <!-- ── MOBILE: 5-slot bar (always visible) ──────────────── -->
+    <div class="mobile-bar">
 
+      <!-- Slot 1: Logo (home link) -->
+      <a class="mobile-slot mobile-slot-logo" routerLink="/" (click)="isMobileOpen = false"
+         aria-label="Acasa">
+        <img src="assets/images/Logo_navbar.png" alt="Adunarea de Magie">
+      </a>
+
+      <!-- Slot 2: Arcana Inn -->
+      <a class="mobile-slot mobile-slot-arcana"
+         href="https://arcanainn.ro/collections/all-mtg" target="_blank" rel="noopener noreferrer"
+         aria-label="Arcana Inn Shop">
+        <img src="assets/images/arcana%20inn%20logo.png" alt="Arcana Inn">
+      </a>
+
+      <!-- Slot 3: Admin slot (empty placeholder when not admin) -->
+      <div class="mobile-slot mobile-slot-admin">
+        <ng-container *ngIf="auth.isAdmin; else adminEmpty">
+          <a routerLink="/admin" class="mobile-admin-icon" (click)="isMobileOpen = false"
+             title="Admin Tools" aria-label="Admin Tools">
+            <i class="fas fa-tools"></i>
+            <span class="mobile-slot-label">Admin</span>
+          </a>
+        </ng-container>
+        <ng-template #adminEmpty><span aria-hidden="true"></span></ng-template>
+      </div>
+
+      <!-- Slot 4: User / Login -->
+      <div class="mobile-slot mobile-slot-user">
+        <ng-container *ngIf="auth.isAuthenticated; else mobileBarLoginSlot">
+          <button class="mobile-user-icon" (click)="openPlayerCard()"
+                  title="Cardul meu de jucator" aria-label="Cardul meu de jucator">
+            <i class="fas fa-user"></i>
+            <span class="mobile-slot-label">{{ firstName }}</span>
+          </button>
+        </ng-container>
+        <ng-template #mobileBarLoginSlot>
+          <a routerLink="/auth" class="mobile-login-icon" (click)="isMobileOpen = false"
+             aria-label="Autentificare">
+            <i class="fas fa-user"></i>
+            <span class="mobile-slot-label">Login</span>
+          </a>
+        </ng-template>
+      </div>
+
+      <!-- Slot 5: Hamburger — opens nav dropdown -->
+      <button class="mobile-slot mobile-slot-menu" (click)="toggleMobile()"
+              [attr.aria-expanded]="isMobileOpen" aria-label="Navigare">
+        <i class="fas" [class.fa-bars]="!isMobileOpen" [class.fa-times]="isMobileOpen"></i>
+        <span class="mobile-slot-label">{{ isMobileOpen ? 'Inchide' : 'Meniu' }}</span>
+      </button>
+
+    </div>
   </div>
 
-  <!-- Mobile menu -->
-  <div class="mobile-menu" id="mobile-menu" [class.open]="isMobileOpen">
-    <ul><li *ngFor="let link of navLinks"><a (click)="navigate(link)" role="button" tabindex="0">{{ link.label }}</a></li></ul>
-    <a routerLink="/auth" class="btn-login" (click)="isMobileOpen = false"><i class="fas fa-user"></i> Login</a>
+  <!-- ── Mobile dropdown: full viewport height, fixed ─────── -->
+  <div class="mobile-menu" id="mobile-menu" [class.open]="isMobileOpen" [attr.aria-hidden]="!isMobileOpen">
+    <ul>
+      <li *ngFor="let link of mobileNavLinks">
+        <a (click)="navigate(link)" role="button" tabindex="0" (keydown.enter)="navigate(link)">{{ link.label }}</a>
+      </li>
+    </ul>
+    <ng-container *ngIf="auth.isAuthenticated; else mobileLoginBtn">
+      <a *ngIf="auth.isAdmin" routerLink="/admin" class="btn-admin-tools-mobile" (click)="isMobileOpen = false">
+        <i class="fas fa-tools"></i> Admin Tools
+      </a>
+      <div class="mobile-user">
+        <button class="mobile-player-card-btn" (click)="openPlayerCard()">
+          <i class="fas fa-user"></i> {{ firstName }}
+        </button>
+        <button class="btn-logout" (click)="logout()"><i class="fas fa-sign-out-alt"></i> Deconectare</button>
+      </div>
+    </ng-container>
+    <ng-template #mobileLoginBtn>
+      <a routerLink="/auth" class="btn-login" (click)="isMobileOpen = false"><i class="fas fa-user"></i> Login</a>
+    </ng-template>
   </div>
 </nav>

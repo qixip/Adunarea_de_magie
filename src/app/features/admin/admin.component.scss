@@ -1,0 +1,65 @@
+.admin-page {
+  min-height: calc(100vh - var(--navbar-height));
+  padding: 60px 0 80px;
+  background: var(--color-bg);
+}
+
+.admin-header {
+  margin-bottom: 40px;
+
+  h1 {
+    font-size: 2rem;
+    font-family: var(--font-heading);
+    color: var(--color-primary);
+    margin: 0 0 8px;
+
+    i { margin-right: 10px; color: var(--color-accent); }
+  }
+
+  p {
+    color: var(--color-gray-500);
+    margin: 0;
+  }
+}
+
+.tool-tabs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.tool-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border: 2px solid var(--color-gray-200);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--color-gray-500);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  i { font-size: 1rem; }
+
+  &:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  &.active {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: #fff;
+  }
+}
+
+.tool-panel {
+  background: #fff;
+  border: 1px solid var(--color-gray-200);
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: var(--shadow-sm);
+}

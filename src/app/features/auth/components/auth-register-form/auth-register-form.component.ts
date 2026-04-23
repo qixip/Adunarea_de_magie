@@ -14,16 +14,13 @@ export class AuthRegisterFormComponent {
   @Input() success = false;
   @Output() submitForm = new EventEmitter<void>();
 
-  get nameControl(): AbstractControl | null {
-    return this.form.get('name');
-  }
+  get nameControl(): AbstractControl | null { return this.form.get('name'); }
+  get emailControl(): AbstractControl | null { return this.form.get('email'); }
+  get passwordControl(): AbstractControl | null { return this.form.get('password'); }
+  get confirmPasswordControl(): AbstractControl | null { return this.form.get('confirmPassword'); }
 
-  get emailControl(): AbstractControl | null {
-    return this.form.get('email');
-  }
-
-  get passwordControl(): AbstractControl | null {
-    return this.form.get('password');
+  get passwordMismatch(): boolean {
+    return this.form.hasError('passwordMismatch') && !!this.confirmPasswordControl?.touched;
   }
 
   onSubmit(): void {

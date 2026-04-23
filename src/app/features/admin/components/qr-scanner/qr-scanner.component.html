@@ -1,0 +1,146 @@
+<div class="qr-scanner-tool">
+  <h2><i class="fas fa-qrcode"></i> Scanner QR Jucători</h2>
+  <p class="tool-desc">Selectați evenimentul de astăzi, apoi scanați codul QR al jucătorului pentru a confirma prezența și a acorda XP.</p>
+
+  <!-- ── IDLE: event selector + start button ─────────────────────────────── -->
+  <div *ngIf="scanState === 'idle'" class="scanner-idle">
+
+    <div class="event-selector" *ngIf="!loadingEvents">
+
+      <ng-container *ngIf="noEventsToday">
+        <p class="no-events-msg">
+          <i class="fas fa-calendar-times"></i> Nu există evenimente programate pentru astăzi.
+        </p>
+      </ng-container>
+
+      <ng-container *ngIf="!noEventsToday">
+        <label class="event-label" for="eventSelect">
+          <i class="fas fa-calendar-day"></i> Eveniment de astăzi
+        </label>
+        <select id="eventSelect" class="event-select" [(ngModel)]="selectedEventId">
+          <option value="">— Selectați evenimentul —</option>
+          <option *ngFor="let ev of todayEvents" [value]="ev.id">
+            {{ ev.title }} ({{ formatTime(ev.scheduled_time) }})
+          </option>
+        </select>
+
+        <button
+          class="btn btn-primary btn-lg start-btn"
+          [disabled]="!selectedEventId"
+          (click)="startScanner()"
+        >
+          <i class="fas fa-camera"></i> Pornește Camera
+        </button>
+      </ng-container>
+    </div>
+
+    <div *ngIf="loadingEvents" class="scanner-loading">
+      <i class="fas fa-spinner fa-spin fa-2x"></i>
+      <p>Se încarcă evenimentele de astăzi…</p>
+    </div>
+
+  </div>
+
+  <!-- ── SCANNING ─────────────────────────────────────────────────────────── -->
+  <div *ngIf="scanState === 'scanning'" class="scanner-active">
+    <p class="scanning-for" *ngIf="selectedEvent">
+      <i class="fas fa-calendar-check"></i>
+      Scanare pentru: <strong>{{ selectedEvent.title }}</strong>
+    </p>
+    <zxing-scanner
+      [enable]="scannerEnabled"
+      [device]="currentDevice"
+      (scanSuccess)="onScanSuccess($event)"
+      (scanError)="onScanError($event)"
+      [formats]="formats"
+      [autofocusEnabled]="true"
+      [tryHarder]="true">
+    </zxing-scanner>
+    <button class="btn btn-outline-secondary mt-3" (click)="stopScanner()">
+      <i class="fas fa-times"></i> Anulează
+    </button>
+  </div>
+
+  <!-- ── LOADING ───────────────────────────────────────────────────────────── -->
+  <div *ngIf="scanState === 'loading'" class="scanner-loading">
+    <i class="fas fa-spinner fa-spin fa-2x"></i>
+    <p>Se verifică jucătorul…</p>
+  </div>
+
+  <!-- ── RESULT ────────────────────────────────────────────────────────────── -->
+  <div *ngIf="scanState === 'result' && result" class="scanner-result"
+       [class.checked-in]="!result.alreadyCheckedIn"
+       [class.already-in]="result.alreadyCheckedIn">
+
+    <!-- Status badge -->
+    <div class="result-badge">
+      <i class="fas"
+         [class.fa-check-circle]="!result.alreadyCheckedIn"
+         [class.fa-exclamation-circle]="result.alreadyCheckedIn"></i>
+      <span>{{ result.alreadyCheckedIn ? 'DEJA ÎNREGISTRAT' : 'PREZENT' }}</span>
+    </div>
+
+    <!-- User info -->
+    <div class="result-user">
+      <div class="result-row"><i class="fas fa-user"></i><strong>{{ result.user.name }}</strong></div>
+      <div class="result-row"><i class="fas fa-envelope"></i><span>{{ result.user.email }}</span></div>
+    </div>
+
+    <!-- XP gained -->
+    <div class="xp-gained" *ngIf="!result.alreadyCheckedIn && result.xpAwarded > 0">
+      <i class="fas fa-star"></i>
+      <span>+{{ result.xpAwarded }} XP câștigat</span>
+    </div>
+
+    <!-- Level & rank stats -->
+    <div class="stats-row" *ngIf="result.xp">
+      <div class="stat-chip">
+        <span class="stat-val">{{ result.xp.isMaxLevel ? 'MAX' : result.xp.level }}</span>
+        <span class="stat-key">Nivel</span>
+      </div>
+      <div class="stat-chip rank-chip">
+        <span class="stat-val rank-val">{{ result.xp.rank }}</span>
+        <span class="stat-key">Rang</span>
+      </div>
+      <div class="stat-chip">
+        <span class="stat-val">{{ result.xp.isMaxLevel ? '100' : result.xp.xpInCurrentLevel }}</span>
+        <span class="stat-key">XP nivel</span>
+      </div>
+    </div>
+
+    <!-- XP bar (static, no animation on admin screen) -->
+    <div class="admin-xp-bar" *ngIf="result.xp">
+      <app-xp-bar [xpData]="result.xp" [noAnimation]="true"></app-xp-bar>
+    </div>
+
+    <!-- Subscription -->
+    <div class="result-sub" *ngIf="result.subscription">
+      <i class="fas fa-crown"></i>
+      <span>Abonament {{ result.subscription.type }} — valabil până {{ result.subscription.valid_until }}</span>
+    </div>
+    <div class="result-sub no-sub" *ngIf="!result.subscription">
+      <i class="fas fa-times-circle"></i> Fără abonament activ
+    </div>
+
+    <p class="result-message">{{ result.message }}</p>
+
+    <div class="result-actions">
+      <button class="btn btn-primary" (click)="scanAnother()">
+        <i class="fas fa-qrcode"></i> Scanează alt cod
+      </button>
+      <button class="btn btn-outline-secondary" (click)="reset()">
+        <i class="fas fa-exchange-alt"></i> Schimbă evenimentul
+      </button>
+    </div>
+  </div>
+
+  <!-- ── ERROR ─────────────────────────────────────────────────────────────── -->
+  <div *ngIf="scanState === 'error'" class="scanner-error">
+    <i class="fas fa-exclamation-triangle fa-2x"></i>
+    <p>{{ errorMsg }}</p>
+    <button class="btn btn-outline-secondary" (click)="scanState = 'idle'; errorMsg = ''">
+      <i class="fas fa-redo"></i> Încearcă din nou
+    </button>
+  </div>
+
+</div>

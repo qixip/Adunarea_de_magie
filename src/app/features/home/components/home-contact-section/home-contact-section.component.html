@@ -1,47 +1,59 @@
 <section id="contact" class="section section-dark" aria-labelledby="contact-title">
   <div class="container">
+
     <header class="section-header">
-      <span class="section-tag">Contactează-ne</span>
-      <h2 class="section-title" id="contact-title">Ai Întrebări despre Evenimente?</h2>
+      <span class="section-tag contact-tag">Hai să Vorbim</span>
+      <h2 class="section-title" id="contact-title">AI ÎNTREBĂRI SAU VREI SĂ INTRI ÎN COMUNITATE?</h2>
       <div class="section-divider"></div>
       <p class="section-subtitle">
-        Completează formularul pentru întrebări despre turnee, formate sau colaborări. Îți răspundem în maximum 24 de ore.
+        Scrie-ne dacă vrei detalii despre program, formate sau evenimente.<br>
+        Dacă preferi, poți intra direct și în comunitatea noastră de WhatsApp sau Discord.
       </p>
     </header>
 
     <div class="contact-grid">
-      <div class="contact-form-wrapper">
+
+      <!-- ── Left card: contact form ──────────────────────────── -->
+      <div class="contact-card">
+        <div class="card-header">
+          <div class="card-icon">
+            <i class="fas fa-paper-plane" aria-hidden="true"></i>
+          </div>
+          <div class="card-header-text">
+            <h3>SCRIE-NE DIRECT</h3>
+            <p>Folosește formularul pentru întrebări despre evenimente, formate sau colaborări. Îți răspundem cât de repede putem.</p>
+          </div>
+        </div>
+
         <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form">
           <div class="form-group">
-            <label for="contact-name">Nume *</label>
-            <input id="contact-name" type="text" formControlName="name" class="form-control" placeholder="Numele tău">
+            <label for="contact-name">Nume</label>
+            <input id="contact-name" type="text" formControlName="name"
+                   class="form-control" placeholder="Numele tău">
           </div>
 
           <div class="form-group">
-            <label for="contact-email">Email *</label>
-            <input id="contact-email" type="email" formControlName="email" class="form-control" placeholder="email@exemplu.ro">
+            <label for="contact-email">Email</label>
+            <input id="contact-email" type="email" formControlName="email"
+                   class="form-control" placeholder="email@exemplu.ro">
           </div>
 
           <div class="form-group">
-            <label for="contact-phone">Telefon</label>
-            <input id="contact-phone" type="tel" formControlName="phone" class="form-control" placeholder="+40 700 000 000">
+            <label for="contact-message">Mesaj</label>
+            <textarea id="contact-message" formControlName="message"
+                      class="form-control" rows="5"
+                      placeholder="Scrie-ne mesajul tău..."></textarea>
           </div>
 
-          <div class="form-group full-width">
-            <label for="contact-message">Mesaj *</label>
-            <textarea id="contact-message" formControlName="message" class="form-control" rows="5" placeholder="Întrebarea ta despre evenimente, turnee sau comunitate..."></textarea>
-          </div>
-
-          <button type="submit" class="btn btn-primary btn-lg" [disabled]="contactForm.invalid || isSubmitting">
+          <button type="submit" class="btn-submit" [disabled]="contactForm.invalid || isSubmitting">
             <i class="fas fa-paper-plane" aria-hidden="true"></i>
-            {{ isSubmitting ? 'Se trimite...' : 'Trimite Mesajul' }}
+            {{ isSubmitting ? 'Se trimite...' : 'Trimite mesajul' }}
           </button>
 
           <p *ngIf="submitSuccess" class="success-message">
             <i class="fas fa-check-circle"></i>
             Mesaj trimis cu succes! Îți răspundem în curând.
           </p>
-
           <p *ngIf="submitError" class="error-message">
             <i class="fas fa-exclamation-circle"></i>
             {{ submitError }}
@@ -49,25 +61,62 @@
         </form>
       </div>
 
-      <div class="social-links-section">
-        <h3>Alătură-te Comunității MTG</h3>
-        <p>
-          Fii parte din comunitatea de Magic din București. Discută strategii, găsește parteneri de joc și află primul despre evenimente noi.
-        </p>
+      <!-- ── Right card: community links ─────────────────────── -->
+      <div class="contact-card">
+        <div class="card-header">
+          <div class="card-icon">
+            <i class="fas fa-users" aria-hidden="true"></i>
+          </div>
+          <div class="card-header-text">
+            <h3>INTRĂ ÎN COMUNITATE</h3>
+            <p>Cel mai rapid mod de a găsi parteneri de joacă și de a afla ce se întâmplă la Adunarea de Magie.</p>
+          </div>
+        </div>
 
-        <div class="social-buttons">
-          <a
-            *ngFor="let link of socialLinks"
-            [href]="link.url"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="social-button"
-            [attr.aria-label]="link.name">
-            <i [class]="link.icon" aria-hidden="true"></i>
-            <span>{{ link.label }}</span>
-          </a>
+        <div class="community-links">
+
+          <!-- Primary: WhatsApp & Discord -->
+          <ng-container *ngFor="let link of socialLinks">
+            <a *ngIf="link.name === 'WhatsApp' || link.name === 'Discord'"
+               [href]="link.url"
+               target="_blank" rel="noopener noreferrer"
+               class="community-btn"
+               [class.community-btn--wa]="link.name === 'WhatsApp'"
+               [class.community-btn--dc]="link.name === 'Discord'"
+               [attr.aria-label]="'Intră pe ' + link.name">
+              <span class="community-btn-icon">
+                <i [class]="link.icon" aria-hidden="true"></i>
+              </span>
+              <span class="community-btn-label">Intră pe {{ link.name }}</span>
+              <i class="fas fa-chevron-right community-btn-chevron" aria-hidden="true"></i>
+            </a>
+          </ng-container>
+
+          <!-- Divider -->
+          <div class="social-divider" aria-hidden="true">
+            <span class="divider-line"></span>
+            <span class="divider-text">Ne găsești și aici</span>
+            <span class="divider-line"></span>
+          </div>
+
+          <!-- Secondary: Instagram, Facebook, YouTube -->
+          <ng-container *ngFor="let link of socialLinks">
+            <a *ngIf="link.name !== 'WhatsApp' && link.name !== 'Discord'"
+               [href]="link.url"
+               target="_blank" rel="noopener noreferrer"
+               class="social-row"
+               [attr.aria-label]="link.name">
+              <span class="social-row-icon" [style.color]="link.color">
+                <i [class]="link.icon" aria-hidden="true"></i>
+              </span>
+              <span class="social-row-label">{{ link.name }}</span>
+              <i class="fas fa-chevron-right social-row-chevron" aria-hidden="true"></i>
+            </a>
+          </ng-container>
+
         </div>
       </div>
+
     </div>
   </div>
 </section>

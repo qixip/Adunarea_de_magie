@@ -1,0 +1,70 @@
+<section id="orar" class="section section-alt" aria-labelledby="orar-title">
+  <div class="container">
+
+    <header class="section-header">
+      <span class="section-tag">Orar Săptămânal</span>
+      <h2 class="section-title" id="orar-title">Când Ne Jucăm</h2>
+      <div class="section-divider"></div>
+      <p class="section-subtitle">
+        Programul de mai jos arată zilele în care se strâng, de obicei, cei mai mulți jucători pentru anumite formate. Dar la Adunarea de Magie nu jucăm doar "după program".
+      </p>
+    </header>
+
+    <!-- Luni closed divider -->
+    <div class="closed-day-divider">
+      <span class="divider-line"></span>
+      <span class="divider-label">
+        <i class="fas fa-moon" aria-hidden="true"></i>
+        Luni &ndash; Închis
+      </span>
+      <span class="divider-line"></span>
+    </div>
+
+    <div class="schedule-grid">
+      <article class="schedule-card" *ngFor="let session of sessions" [class.free]="session.isFree">
+        <div class="schedule-day-badge">
+          <span class="day-name">{{ session.day }}</span>
+          <span class="badge-free" *ngIf="session.isFree">Gratuit</span>
+        </div>
+        <div class="schedule-body">
+          <h3 class="schedule-name">{{ session.name }}</h3>
+          <p class="schedule-description">{{ session.description }}</p>
+          <div class="schedule-meta">
+            <span class="meta-item">
+              <i class="fas fa-clock" aria-hidden="true"></i>
+              {{ session.time }}
+            </span>
+            <span class="meta-item">
+              <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+              {{ session.location }}
+            </span>
+            <a class="maps-btn maps-btn-sm" href="https://www.google.com/maps/place/Bulevardul+Ferdinand+I+126A,+021396+Bucure%C8%99ti/@44.4464722,26.1283407,16.75z/data=!4m6!3m5!1s0x40b1f8d31aeb9fa9:0xe24bb3ef33e72776!8m2!3d44.443737!4d26.131302!16s%2Fg%2F11tnm1x1x0?entry=ttu&amp;g_ep=EgoyMDI2MDQxNS4wIKXMDSoASAFQAw%3D%3D"
+               target="_blank" rel="noopener noreferrer" aria-label="Deschide în Google Maps">
+              <i class="fas fa-map-marker-alt" aria-hidden="true"></i> Maps
+            </a>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="schedule-note">
+      <i class="fas fa-info-circle" aria-hidden="true"></i>
+      <span class="schedule-note-text">Orele și locațiile pot varia. Urmărește grupul de WhatsApp sau Discord pentru anunțuri actualizate.</span>
+      <div class="schedule-note-actions">
+        <a href="#" class="note-btn btn-discord" target="_blank" rel="noopener noreferrer" aria-label="Discord">
+          <i class="fab fa-discord" aria-hidden="true"></i>
+          Discord
+        </a>
+        <a href="#" class="note-btn btn-whatsapp" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+          <i class="fab fa-whatsapp" aria-hidden="true"></i>
+          WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <p class="section-subtitle section-subtitle--secondary">
+      Dacă ai chef de Commander, Pauper, board games sau alt format, scrie în comunitatea noastră de WhatsApp sau Discord și vezi cine mai e disponibil. De multe ori, e suficient să întrebi ca să se strângă o masă.
+    </p>
+
+  </div>
+</section>

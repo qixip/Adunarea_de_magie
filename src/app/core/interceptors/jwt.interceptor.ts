@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+﻿import { Injectable } from '@angular/core';
 import {
   HttpRequest, HttpHandler, HttpEvent,
   HttpInterceptor, HttpErrorResponse
@@ -7,6 +7,7 @@ import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { catchError, filter, switchMap, take } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
@@ -16,6 +17,10 @@ export class JwtInterceptor implements HttpInterceptor {
   constructor(private auth: AuthService, private router: Router) {}
 
   intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    if (!req.url.startsWith(`${environment.apiBaseUrl}/api/`)) {
+      return next.handle(req);
+    }
+
     const token = this.auth.getAccessToken();
     const authReq = token ? this.attach(req, token) : req;
 
@@ -34,6 +39,14 @@ export class JwtInterceptor implements HttpInterceptor {
   }
 
   private handle401(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    // Prevent infinite loop: a 401 on the refresh endpoint means the session
+    // is fully expired - log out without attempting another refresh.
+    if (req.url.includes('/auth/refresh')) {
+      this.isRefreshing = false;
+      this.auth.logout();
+      return throwError(() => new Error('Session expired'));
+    }
+
     if (!this.isRefreshing) {
       this.isRefreshing = true;
       this.refreshDone$.next(null);

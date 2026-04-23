@@ -1,0 +1,44 @@
+<section id="despre" class="section" aria-labelledby="despre-title">
+  <div class="container about-layout">
+    <div class="about-text">
+      <span class="section-tag">Povestea Noastră</span>
+      <h2 class="section-title" id="despre-title">Pasionați de MTG.<br>Uniți de Comunitate.</h2>
+      <div class="about-divider"></div>
+
+      <p class="about-copy">
+        Adunarea de Magie nu a început într-o sală de evenimente și nici dintr-un plan perfect pus pe hârtie. A început simplu, în sufragerie, din seri de joc între prieteni care voiau mai mult decât partide ocazionale și grupuri împrăștiate.
+      </p>
+      <p class="about-copy">
+        Din locul ăla mic a crescut, treptat, o comunitate reală de jucători din București: oameni veniți pentru Commander, cEDH, Pauper, schimburi, testare de deck-uri și, mai ales, pentru plăcerea de a avea un loc unde să se adune constant.
+      </p>
+      <p class="about-copy">
+        Astăzi, Adunarea de Magie înseamnă evenimente recurente, seri dedicate mai multor formate și o comunitate activă care continuă să crească. Dar esența a rămas aceeași: un loc construit de jucători, pentru jucători.
+      </p>
+
+      <div class="split-cta">
+        <a href="https://chat.whatsapp.com/HOwTQ5cA6mt3OgtiaEFt3j"
+           class="split-half split-wa"
+           target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+          <i class="fab fa-whatsapp" aria-hidden="true"></i>
+          <span>WhatsApp</span>
+        </a>
+        <a href="https://discord.gg/ZnXaK2EH"
+           class="split-half split-dc"
+           target="_blank" rel="noopener noreferrer" aria-label="Discord">
+          <i class="fab fa-discord" aria-hidden="true"></i>
+          <span>Discord</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="about-pillars">
+      <article class="pillar-card" *ngFor="let pillar of communityPillars">
+        <div class="pillar-icon" aria-hidden="true">
+          <i [class]="pillar.icon"></i>
+        </div>
+        <h3>{{ pillar.title }}</h3>
+        <p>{{ pillar.description }}</p>
+      </article>
+    </div>
+  </div>
+</section>

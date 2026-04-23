@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
 // =============================================
 // CUSTOM FONTS
 // =============================================
@@ -18,8 +20,7 @@
 @font-face {
   font-family: 'Mplantin';
   src: url('/assets/mtg-font-master/fonts/Mplantin.woff') format('woff'),
-       url('/assets/mtg-font-master/fonts/Mplantin.ttf') format('truetype'),
-       url('/assets/mtg-font-master/fonts/Mplantin.otf') format('opentype');
+       url('/assets/mtg-font-master/fonts/Mplantin.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -34,12 +35,13 @@
   --color-primary:       #2c3691;  // Egyptian Blue
   --color-primary-dark:  #1e2668;
   --color-primary-light: #3d4ab5;
-  --color-accent:        #26ace2;  // Fresh Ski
+  --color-accent: #00aeef;  // Vivid Azure (Brand)
   --color-accent-dark:   #1b8bbf;
-  --color-cta:           #ec202a;  // Racing Red
+  --color-cta: #e7272d;  // Brand Red
   --color-cta-hover:     #D52128;  // Flag Red
   --color-dark:          #040707;  // Black
   --color-light:         #ffffff;  // White
+  --color-green: #aeef00;  // Brand Green
 
   // Neutral grays
   --color-gray-50:   #f9fafb;
@@ -50,8 +52,8 @@
   --color-gray-700:  #374151;
 
   // Typography
-  --font-heading: 'Beleren', 'Cinzel', 'Georgia', serif;
-  --font-body:    'Mplantin', 'Raleway', 'Arial', sans-serif;
+  --font-heading: 'Poppins', sans-serif;
+  --font-body:    'Poppins', sans-serif;
 
   // Spacing
   --navbar-height:   72px;
@@ -67,12 +69,12 @@
   --radius-full: 9999px;
 
   // Shadows
-  --shadow-sm:  0 1px 3px rgba(0,0,0,0.10), 0 1px 2px rgba(0,0,0,0.06);
-  --shadow-md:  0 4px 12px rgba(0,0,0,0.10), 0 2px 4px rgba(0,0,0,0.06);
-  --shadow-lg:  0 10px 30px rgba(0,0,0,0.12), 0 4px 10px rgba(0,0,0,0.06);
-  --shadow-xl:  0 20px 50px rgba(0,0,0,0.18);
-  --shadow-glow-accent:  0 0 20px rgba(38, 172, 226, 0.35);
-  --shadow-glow-primary: 0 0 30px rgba(44, 54, 145, 0.4);
+  --shadow-sm: none;  // Minimalist: no shadows
+  --shadow-md: 0 2px 4px rgba(0,0,0,0.06);
+  --shadow-lg: 0 4px 8px rgba(0,0,0,0.08);
+  --shadow-xl: 0 8px 16px rgba(0,0,0,0.10);
+  --shadow-glow-accent: none;  // No glows in minimalist design
+  --shadow-glow-primary: none;  // No glows in minimalist design
 
   // Transitions
   --transition:      all 0.3s ease;
@@ -124,6 +126,8 @@ button { font-family: var(--font-body); cursor: pointer; border: none; backgroun
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   line-height: 1.15;
+  font-weight: 700;
+  text-transform: uppercase;  // Brand guideline: ALL CAPS for headers
   color: var(--color-primary);
 }
 
@@ -197,6 +201,19 @@ main {
     border-color: var(--color-primary-dark);
     transform: translateY(-2px);
     box-shadow: 0 8px 24px rgba(44, 54, 145, 0.38);
+  }
+}
+
+.btn-outline-primary {
+  background-color: transparent;
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+
+  &:hover:not(:disabled) {
+    background-color: var(--color-primary);
+    color: var(--color-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(44, 54, 145, 0.3);
   }
 }
 
@@ -276,6 +293,11 @@ main {
   margin: 20px auto 0;
 }
 
+// Alt section variant (subtle gray background)
+.section-alt {
+  background-color: var(--color-gray-50);
+}
+
 // Dark section variant
 .section-dark {
   background-color: var(--color-dark);
@@ -351,3 +373,144 @@ main {
   :root { --section-padding: 48px 0; }
 }
 
+
+
+// =============================================
+// MTG DRAGON SCROLLBAR
+// =============================================
+
+// Firefox fallback
+html { scrollbar-color: #c8840a #080604; }
+
+::-webkit-scrollbar {
+  width: 126px;
+}
+
+::-webkit-scrollbar-corner {
+  background: #080604;
+}
+
+// Track - staggered dragon-scale semicircles + vertical vein lines
+::-webkit-scrollbar-track {
+  background-color: #080604;
+  background-image:
+    radial-gradient(ellipse 100% 75% at 50% 0%, rgba(180,110,5,0.22) 64%, transparent 65%),
+    radial-gradient(ellipse 100% 75% at 50% 0%, rgba(180,110,5,0.16) 64%, transparent 65%),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0px, transparent 41px,
+      rgba(180,110,5,0.08) 41px, rgba(180,110,5,0.08) 43px,
+      transparent 43px
+    );
+  background-size: 126px 18px, 126px 18px, 126px 100%;
+  background-position: 0 0, 63px 9px, 0 0;
+  border-left:  3px solid #2a1800;
+  border-right: 3px solid #2a1800;
+  box-shadow: inset 0 0 16px rgba(0,0,0,0.9);
+}
+
+// Thumb - scale texture layered over gold gradient
+::-webkit-scrollbar-thumb {
+  min-height: 56px;
+  border: 5px solid #080604;
+  border-radius: 6px;
+  background:
+    radial-gradient(ellipse 55% 65% at 50% 0%, rgba(255,210,60,0.18) 62%, transparent 63%),
+    radial-gradient(ellipse 55% 65% at 50% 0%, rgba(255,210,60,0.12) 62%, transparent 63%),
+    repeating-linear-gradient(
+      180deg,
+      transparent 0px, transparent 14px,
+      rgba(0,0,0,0.22) 14px, rgba(0,0,0,0.22) 15px,
+      rgba(255,195,40,0.10) 15px, rgba(255,195,40,0.10) 16px,
+      transparent 16px
+    ),
+    linear-gradient(180deg,
+      #e09a12 0%, #6b3d00 16%, #c07c08 44%, #6b3d00 72%, #e09a12 100%
+    );
+  background-size: 116px 20px, 116px 20px, 116px 100%, 116px 100%;
+  background-position: 0 0, 58px 10px, 0 0, 0 0;
+  box-shadow:
+    inset  0  3px 0 rgba(255,220,70,0.30),
+    inset  0 -3px 0 rgba(0,0,0,0.70),
+    inset  3px 0  0 rgba(220,160,20,0.20),
+    inset -3px 0  0 rgba(220,160,20,0.20),
+    0 0 14px rgba(180,110,0,0.28);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background:
+    radial-gradient(ellipse 55% 65% at 50% 0%, rgba(255,230,80,0.24) 62%, transparent 63%),
+    radial-gradient(ellipse 55% 65% at 50% 0%, rgba(255,230,80,0.16) 62%, transparent 63%),
+    repeating-linear-gradient(
+      180deg,
+      transparent 0px, transparent 14px,
+      rgba(0,0,0,0.18) 14px, rgba(0,0,0,0.18) 15px,
+      rgba(255,210,60,0.14) 15px, rgba(255,210,60,0.14) 16px,
+      transparent 16px
+    ),
+    linear-gradient(180deg,
+      #f0aa18 0%, #7a4800 16%, #d4920c 44%, #7a4800 72%, #f0aa18 100%
+    );
+  background-size: 116px 20px, 116px 20px, 116px 100%, 116px 100%;
+  background-position: 0 0, 58px 10px, 0 0, 0 0;
+  box-shadow:
+    inset  0  3px 0 rgba(255,235,90,0.40),
+    inset  0 -3px 0 rgba(0,0,0,0.70),
+    0 0 22px rgba(210,135,10,0.55);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(180deg, #f8c030 0%, #a07000 50%, #f8c030 100%);
+}
+
+// Horn buttons - three-layer SVG triangles
+::-webkit-scrollbar-button {
+  display: block;
+  height: 72px;
+  background-color: #080604;
+  border-left:  3px solid #2a1800;
+  border-right: 3px solid #2a1800;
+}
+
+::-webkit-scrollbar-button:vertical:single-button:decrement {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 126 72'%3E%3Cpolygon points='63,4 2,68 124,68' fill='%236b3d00'/%3E%3Cpolygon points='63,14 12,60 114,60' fill='%23c8840a'/%3E%3Cpolygon points='63,24 22,52 104,52' fill='%23e09a10'/%3E%3C/svg%3E");
+  background-size: 126px 72px;
+  background-repeat: no-repeat;
+  border-bottom: 2px solid #2a1800;
+}
+
+::-webkit-scrollbar-button:vertical:single-button:increment {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 126 72'%3E%3Cpolygon points='63,68 2,4 124,4' fill='%236b3d00'/%3E%3Cpolygon points='63,58 12,12 114,12' fill='%23c8840a'/%3E%3Cpolygon points='63,48 22,20 104,20' fill='%23e09a10'/%3E%3C/svg%3E");
+  background-size: 126px 72px;
+  background-repeat: no-repeat;
+  border-top: 2px solid #2a1800;
+}
+
+::-webkit-scrollbar-button:hover { background-color: #110c04; }
+::-webkit-scrollbar-button:active { background-color: #1a1006; }
+
+// ── Google Maps inline button ────────────────────────────────────────────────
+.maps-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: #EA4335;
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity 0.18s ease, transform 0.15s ease;
+  flex-shrink: 0;
+
+  i { font-size: 0.75rem; }
+  &:hover { opacity: 0.85; transform: translateY(-1px); }
+}
+
+.maps-btn-sm {
+  padding: 2px 7px;
+  font-size: 0.72rem;
+  border-radius: 4px;
+}

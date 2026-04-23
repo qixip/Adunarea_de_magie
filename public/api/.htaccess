@@ -1,0 +1,17 @@
+RewriteEngine On
+RewriteBase /api/
+
+# Pass Authorization header to PHP (Apache strips it by default)
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+RewriteRule ^auth/login/?$          auth/login.php          [L]
+RewriteRule ^auth/register/?$       auth/register.php       [L]
+RewriteRule ^auth/refresh/?$        auth/refresh.php        [L]
+RewriteRule ^events/?$              events/index.php        [L]
+RewriteRule ^events/register/?$     events/register.php     [L]
+RewriteRule ^events/today/?$        events/today.php        [L]
+RewriteRule ^user/subscription/?$   user/subscription.php   [L]
+RewriteRule ^user/xp/?$             user/xp.php             [L]
+RewriteRule ^admin/check-user/?$    admin/check-user.php    [L]
+RewriteRule ^admin/create-event/?$  admin/create-event.php  [L]
+RewriteRule ^contact/send/?$        contact/send.php        [L]
